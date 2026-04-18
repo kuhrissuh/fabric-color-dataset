@@ -1,4 +1,4 @@
-# fabric-colors
+# fabric-color-dataset
 
 Open-source fabric color dataset. Structured JSON files mapping fabric colors (name, SKU, hex) to their source manufacturer pages. The repo is the product — other tools depend on it as a data layer.
 
@@ -62,7 +62,7 @@ Things we deliberately left out. If tempted to add one, check `docs/project-plan
 
 v0.1 uses jsDelivr CDN only:
 ```
-https://cdn.jsdelivr.net/gh/USER/fabric-colors@v0.1.0/data/...
+https://cdn.jsdelivr.net/gh/USER/fabric-color-dataset@v0.1.0/data/...
 ```
 Git tags are immutable. Tag releases manually; don't tag on every weekly merge.
 

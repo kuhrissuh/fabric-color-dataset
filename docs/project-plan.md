@@ -1,4 +1,4 @@
-# fabric-colors — Project Plan
+# fabric-color-dataset — Project Plan
 
 An open-source fabric color dataset. Structured JSON files mapping real fabric colors (name, SKU, hex) to their source manufacturer pages. The repo is the product — versioned JSON files that other tools (web apps, iOS apps, quilt design tools) depend on as a data layer.
 
@@ -107,7 +107,7 @@ The schema is the API. Downstream tools pin to it, so it deserves the most care.
 Monorepo. The wall between `/data` and `/pipeline` is load-bearing: data consumers should be able to ignore everything except `/data` and `/schemas` and have a complete product.
 
 ```
-fabric-colors/
+fabric-color-dataset/
 ├── README.md
 ├── LICENSE-DATA          (CC0)
 ├── LICENSE-CODE          (MIT)
@@ -220,7 +220,7 @@ def extract(image: FetchedImage, config: ExtractConfig) -> ExtractionResult: ...
 
 ### Caching
 
-One cache directory at `~/.cache/fabric-colors/{stage}/{content_hash}.json`. Each stage checks before work, writes after. Content hashes incorporate stage version; bumping a version invalidates that stage's cache automatically. In CI, persisted via GitHub Actions cache.
+One cache directory at `~/.cache/fabric-color-dataset/{stage}/{content_hash}.json`. Each stage checks before work, writes after. Content hashes incorporate stage version; bumping a version invalidates that stage's cache automatically. In CI, persisted via GitHub Actions cache.
 
 **Cache is local, not committed.** Committed caches bloat the repo and produce noisy diffs. `/raw` snapshots handle reproducibility; derived caches don't need to be in the repo.
 
@@ -418,7 +418,7 @@ Decoupled from weekly updates. Manual tag push when stable; `release.yml` workfl
 **v0.1: jsDelivr CDN only.**
 
 ```
-https://cdn.jsdelivr.net/gh/yourname/fabric-colors@v0.1.0/data/art-gallery-fabrics/pure-solids.json
+https://cdn.jsdelivr.net/gh/yourname/fabric-color-dataset@v0.1.0/data/art-gallery-fabrics/pure-solids.json
 ```
 
 - Free, fast, globally cached, versioned by git tag.

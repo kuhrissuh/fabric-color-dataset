@@ -1,0 +1,141 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Fabric Color Line v1",
+  "description": "A fabric color line: manufacturer and line metadata plus a list of colors.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "data_version",
+    "manufacturer",
+    "line",
+    "notes",
+    "id_scheme",
+    "generated_on",
+    "generator_version",
+    "color_count",
+    "colors"
+  ],
+  "properties": {
+    "schema_version": { "$ref": "#/$defs/semver" },
+    "data_version": { "$ref": "#/$defs/semver" },
+    "manufacturer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "slug", "website"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "slug": { "$ref": "#/$defs/slug" },
+        "website": { "$ref": "#/$defs/url" }
+      }
+    },
+    "line": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "slug",
+        "substrate",
+        "weight_oz_per_sq_yd",
+        "width_inches"
+      ],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "slug": { "$ref": "#/$defs/slug" },
+        "substrate": { "type": "string", "minLength": 1 },
+        "weight_oz_per_sq_yd": { "type": "number", "exclusiveMinimum": 0 },
+        "width_inches": { "type": "number", "exclusiveMinimum": 0 }
+      }
+    },
+    "notes": { "type": "string" },
+    "id_scheme": { "enum": ["manufacturer_sku", "name_slug"] },
+    "generated_on": { "$ref": "#/$defs/date" },
+    "generator_version": { "$ref": "#/$defs/semver" },
+    "color_count": { "type": "integer", "minimum": 0 },
+    "colors": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/color" }
+    }
+  },
+  "$defs": {
+    "semver": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "date": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+    },
+    "slug": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+    },
+    "hex": {
+      "type": "string",
+      "pattern": "^#[0-9A-F]{6}$"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "url": {
+      "type": "string",
+      "pattern": "^https?://[^\\s]+$"
+    },
+    "color": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "name",
+        "sku",
+        "aliases",
+        "hex",
+        "hex_method",
+        "hex_confidence",
+        "hex_algorithmic",
+        "hex_source",
+        "manufacturer_product_url",
+        "status",
+        "first_seen",
+        "source_collected_on"
+      ],
+      "properties": {
+        "id": { "$ref": "#/$defs/slug" },
+        "name": { "type": "string", "minLength": 1 },
+        "sku": { "type": "string", "minLength": 1 },
+        "aliases": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "hex": { "$ref": "#/$defs/hex" },
+        "hex_method": {
+          "enum": [
+            "manufacturer_official",
+            "vision_claude",
+            "algorithmic",
+            "vision_consensus",
+            "manual_override"
+          ]
+        },
+        "hex_confidence": { "enum": ["high", "medium", "low"] },
+        "hex_algorithmic": { "$ref": "#/$defs/hex" },
+        "hex_source": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["image_url", "image_sha256"],
+          "properties": {
+            "image_url": { "$ref": "#/$defs/url" },
+            "image_sha256": { "$ref": "#/$defs/sha256" }
+          }
+        },
+        "manufacturer_product_url": { "$ref": "#/$defs/url" },
+        "status": {
+          "enum": ["active", "discontinued", "unknown", "superseded"]
+        },
+        "first_seen": { "$ref": "#/$defs/date" },
+        "source_collected_on": { "$ref": "#/$defs/date" }
+      }
+    }
+  }
+}
