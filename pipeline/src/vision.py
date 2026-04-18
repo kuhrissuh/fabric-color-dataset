@@ -12,6 +12,7 @@ import hashlib
 import json
 import os
 import re
+import unicodedata
 from functools import lru_cache
 from pathlib import Path
 from typing import Optional
@@ -127,19 +128,17 @@ def _text_from_response(response) -> str:
 
 
 def _parse_model_output(text: str) -> dict:
-    # Tolerate a fenced ```json block or surrounding whitespace; reject
-    # anything that isn't a well-formed object with the expected shape.
-    cleaned = text.strip()
-    if cleaned.startswith("```"):
-        cleaned = re.sub(r"^```[a-zA-Z]*\n?", "", cleaned)
-        cleaned = re.sub(r"\n?```$", "", cleaned)
-
-    try:
-        obj = json.loads(cleaned)
-    except json.JSONDecodeError as exc:
-        raise VisionError(f"vision output was not valid JSON: {text!r}") from exc
+    # The model usually returns a single JSON object, but sometimes prefixes
+    # it with a false start ("#21A css" etc.) and then emits the real answer
+    # in a fenced ```json block. Try the raw text first, then each fenced
+    # block (last first — that's the settled answer).
+    obj = _first_parseable_json(text)
+    if obj is None:
+        raise VisionError(f"vision output was not valid JSON: {text!r}")
 
     hex_value = obj.get("hex")
+    if isinstance(hex_value, str):
+        hex_value = _normalize_hex(hex_value)
     if not isinstance(hex_value, str) or not HEX_RE.match(hex_value):
         raise VisionError(f"vision hex {hex_value!r} is not #RRGGBB uppercase")
 
@@ -163,6 +162,44 @@ def _parse_model_output(text: str) -> dict:
         "observations": observations,
         "warnings": warnings,
     }
+
+
+_FENCE_RE = re.compile(r"```(?:json)?\s*\n?(.*?)\n?```", re.DOTALL)
+
+
+def _normalize_hex(value: str) -> str:
+    # The model occasionally emits non-ASCII decimal digits inside the hex
+    # (e.g. Devanagari २०४ for 204). Fold them back to ASCII so the regex
+    # check doesn't reject an otherwise-correct color.
+    out = []
+    for ch in value.strip():
+        if not ch.isascii() and ch.isdigit():
+            try:
+                out.append(str(unicodedata.decimal(ch)))
+                continue
+            except (TypeError, ValueError):
+                pass
+        out.append(ch)
+    return "".join(out).upper()
+
+
+def _first_parseable_json(text: str) -> Optional[dict]:
+    candidates: list[str] = []
+    raw = text.strip()
+    if raw:
+        candidates.append(raw)
+    fenced = [m.group(1).strip() for m in _FENCE_RE.finditer(text)]
+    # Prefer later fenced blocks — if the model retried inline, the last
+    # block is the answer it settled on.
+    candidates.extend(reversed(fenced))
+    for candidate in candidates:
+        try:
+            obj = json.loads(candidate)
+        except json.JSONDecodeError:
+            continue
+        if isinstance(obj, dict) and "hex" in obj and "confidence" in obj:
+            return obj
+    return None
 
 
 def _from_json(obj: dict) -> VisionResult:
