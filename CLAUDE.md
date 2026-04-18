@@ -32,7 +32,7 @@ Full project rationale lives in `docs/project-plan.md`. This file is operational
 
 **Vision prompt is versioned as a file.** `pipeline/prompts/hex_extraction_v1.md`. Editing means creating `v2` alongside, not modifying `v1`. The file hash is part of the extraction cache key.
 
-**Temperature 0 for vision calls.** This is extraction, not creative writing.
+**Vision extraction is deterministic by design** — no "creative writing" latitude. On Opus 4.7+ the `temperature` parameter is deprecated and the API rejects it, so don't pass it. On older models that still accept it, set it to 0.
 
 **Use the most capable Claude vision model available when implementing.** Don't hardcode a specific model name from an older plan; check current lineup.
 

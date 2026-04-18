@@ -52,7 +52,6 @@ def extract(image_jpeg: bytes) -> VisionResult:
     response = client.messages.create(
         model=MODEL,
         max_tokens=512,
-        temperature=0,
         messages=[
             {
                 "role": "user",

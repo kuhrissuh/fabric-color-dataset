@@ -298,7 +298,7 @@ The prompt file has a version in its filename and a changelog at its head. The p
 ### Model and settings
 
 - Use the most capable Claude vision model available when implementing (check current lineup; don't rely on a specific model name from an older plan).
-- Temperature 0. This is extraction, not creative writing.
+- Extraction is deterministic by design, not creative writing. On Opus 4.7+ the `temperature` parameter is deprecated and the API rejects it; don't pass it. On older models that still accept it, set to 0.
 
 ### Consensus logic
 

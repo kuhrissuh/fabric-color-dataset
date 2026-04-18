@@ -1,0 +1,239 @@
+{
+  "schema_version": "1.0.0",
+  "data_version": "0.1.0",
+  "manufacturer": {
+    "name": "Robert Kaufman",
+    "slug": "robert-kaufman",
+    "website": "https://www.robertkaufman.com"
+  },
+  "line": {
+    "name": "Kona Cotton",
+    "slug": "kona-cotton",
+    "substrate": "cotton",
+    "weight_oz_per_sq_yd": 4.35,
+    "width_inches": 44.0
+  },
+  "notes": "Robert Kaufman's flagship solid cotton line. Oeko-Tex certified. The most widely used solid in US quilting.",
+  "id_scheme": "manufacturer_sku",
+  "generated_on": "2026-04-18",
+  "generator_version": "0.1.0",
+  "color_count": 12,
+  "colors": [
+    {
+      "id": "robert-kaufman-kona-cotton-k001-1019",
+      "name": "Black",
+      "sku": "K001-1019",
+      "aliases": [],
+      "hex": "#1A1A1A",
+      "hex_method": "vision_claude",
+      "hex_confidence": "medium",
+      "hex_algorithmic": "#222423",
+      "hex_source": {
+        "image_url": "https://www.robertkaufman.com/assets/fabric/detail/K001-1019.jpg",
+        "image_sha256": "e392d4b242b7b596145cd61c54548bae3da295b8cd626a575dd1a05b4fb5aca2"
+      },
+      "manufacturer_product_url": "https://www.robertkaufman.com/fabrics/kona_cotton/K001-1019/",
+      "status": "active",
+      "first_seen": "2026-04-18",
+      "source_collected_on": "2026-04-18"
+    },
+    {
+      "id": "robert-kaufman-kona-cotton-k001-1072",
+      "name": "Chartreuse",
+      "sku": "K001-1072",
+      "aliases": [],
+      "hex": "#BBD143",
+      "hex_method": "vision_claude",
+      "hex_confidence": "medium",
+      "hex_algorithmic": "#BAD235",
+      "hex_source": {
+        "image_url": "https://www.robertkaufman.com/assets/fabric/detail/K001-1072.jpg",
+        "image_sha256": "082241683f05e3454b63d01bf99aa32ed9ff742128b39f480913ae6ce788e70d"
+      },
+      "manufacturer_product_url": "https://www.robertkaufman.com/fabrics/kona_cotton/K001-1072/",
+      "status": "active",
+      "first_seen": "2026-04-18",
+      "source_collected_on": "2026-04-18"
+    },
+    {
+      "id": "robert-kaufman-kona-cotton-k001-1080",
+      "name": "Coal",
+      "sku": "K001-1080",
+      "aliases": [],
+      "hex": "#5E5E5F",
+      "hex_method": "vision_consensus",
+      "hex_confidence": "high",
+      "hex_algorithmic": "#5B595A",
+      "hex_source": {
+        "image_url": "https://www.robertkaufman.com/assets/fabric/detail/K001-1080.jpg",
+        "image_sha256": "184d8597183916b7539371ae9b2b021675f8e4a92fa70682458352efb13f5a22"
+      },
+      "manufacturer_product_url": "https://www.robertkaufman.com/fabrics/kona_cotton/K001-1080/",
+      "status": "active",
+      "first_seen": "2026-04-18",
+      "source_collected_on": "2026-04-18"
+    },
+    {
+      "id": "robert-kaufman-kona-cotton-k001-1083",
+      "name": "Coffee",
+      "sku": "K001-1083",
+      "aliases": [],
+      "hex": "#4A3627",
+      "hex_method": "vision_consensus",
+      "hex_confidence": "high",
+      "hex_algorithmic": "#443224",
+      "hex_source": {
+        "image_url": "https://www.robertkaufman.com/assets/fabric/detail/K001-1083.jpg",
+        "image_sha256": "4da77d42b7cbf65ed20aa4fe5f3971be515a368539c275bbbd995edba7640209"
+      },
+      "manufacturer_product_url": "https://www.robertkaufman.com/fabrics/kona_cotton/K001-1083/",
+      "status": "active",
+      "first_seen": "2026-04-18",
+      "source_collected_on": "2026-04-18"
+    },
+    {
+      "id": "robert-kaufman-kona-cotton-k001-1188",
+      "name": "Kiwi",
+      "sku": "K001-1188",
+      "aliases": [],
+      "hex": "#2BBF3E",
+      "hex_method": "vision_consensus",
+      "hex_confidence": "high",
+      "hex_algorithmic": "#20BB3C",
+      "hex_source": {
+        "image_url": "https://www.robertkaufman.com/assets/fabric/detail/K001-1188.jpg",
+        "image_sha256": "69399750de0ed5b994d96df1bd85070d76cafbab4dd5392a64335996261f6f36"
+      },
+      "manufacturer_product_url": "https://www.robertkaufman.com/fabrics/kona_cotton/K001-1188/",
+      "status": "active",
+      "first_seen": "2026-04-18",
+      "source_collected_on": "2026-04-18"
+    },
+    {
+      "id": "robert-kaufman-kona-cotton-k001-1387",
+      "name": "White",
+      "sku": "K001-1387",
+      "aliases": [],
+      "hex": "#FAFAFA",
+      "hex_method": "vision_consensus",
+      "hex_confidence": "high",
+      "hex_algorithmic": "#F6F6F8",
+      "hex_source": {
+        "image_url": "https://www.robertkaufman.com/assets/fabric/detail/K001-1387.jpg",
+        "image_sha256": "f39efd8e1f677004862a15e677b3da3e9041ae1523ee34ca6453001e47c419d4"
+      },
+      "manufacturer_product_url": "https://www.robertkaufman.com/fabrics/kona_cotton/K001-1387/",
+      "status": "active",
+      "first_seen": "2026-04-18",
+      "source_collected_on": "2026-04-18"
+    },
+    {
+      "id": "robert-kaufman-kona-cotton-k001-1514",
+      "name": "Robin Egg",
+      "sku": "K001-1514",
+      "aliases": [],
+      "hex": "#9FE3ED",
+      "hex_method": "vision_claude",
+      "hex_confidence": "medium",
+      "hex_algorithmic": "#8EEBFA",
+      "hex_source": {
+        "image_url": "https://www.robertkaufman.com/assets/fabric/detail/K001-1514.jpg",
+        "image_sha256": "9eda06b9153800a00c7fdb9b0d3df4573ada7b49cd0eee2dac16aa8e98b67527"
+      },
+      "manufacturer_product_url": "https://www.robertkaufman.com/fabrics/kona_cotton/K001-1514/",
+      "status": "active",
+      "first_seen": "2026-04-18",
+      "source_collected_on": "2026-04-18"
+    },
+    {
+      "id": "robert-kaufman-kona-cotton-k001-197",
+      "name": "Aloe",
+      "sku": "K001-197",
+      "aliases": [],
+      "hex": "#7ED4B0",
+      "hex_method": "vision_consensus",
+      "hex_confidence": "high",
+      "hex_algorithmic": "#7ED6B4",
+      "hex_source": {
+        "image_url": "https://www.robertkaufman.com/assets/fabric/detail/K001-197.jpg",
+        "image_sha256": "65f2cd12281b033cd52f8180ce818f12b2f9431c396b345e51cfaad3643557ef"
+      },
+      "manufacturer_product_url": "https://www.robertkaufman.com/fabrics/kona_cotton/K001-197/",
+      "status": "active",
+      "first_seen": "2026-04-18",
+      "source_collected_on": "2026-04-18"
+    },
+    {
+      "id": "robert-kaufman-kona-cotton-k001-21",
+      "name": "Honey Dew",
+      "sku": "K001-21",
+      "aliases": [],
+      "hex": "#D2E292",
+      "hex_method": "vision_claude",
+      "hex_confidence": "medium",
+      "hex_algorithmic": "#D9E88B",
+      "hex_source": {
+        "image_url": "https://www.robertkaufman.com/assets/fabric/detail/K001-21.jpg",
+        "image_sha256": "8d91244182607f7f3e1fd0fa4984a881726492d974b533729fa49fe5affcb200"
+      },
+      "manufacturer_product_url": "https://www.robertkaufman.com/fabrics/kona_cotton/K001-21/",
+      "status": "active",
+      "first_seen": "2026-04-18",
+      "source_collected_on": "2026-04-18"
+    },
+    {
+      "id": "robert-kaufman-kona-cotton-k001-23",
+      "name": "Lemon",
+      "sku": "K001-23",
+      "aliases": [],
+      "hex": "#F7E189",
+      "hex_method": "vision_claude",
+      "hex_confidence": "medium",
+      "hex_algorithmic": "#FDDC7C",
+      "hex_source": {
+        "image_url": "https://www.robertkaufman.com/assets/fabric/detail/K001-23.jpg",
+        "image_sha256": "d00e47b0fb394bdd52a776a05af918ebc72d48f9db6d96e3437884e06b140f1c"
+      },
+      "manufacturer_product_url": "https://www.robertkaufman.com/fabrics/kona_cotton/K001-23/",
+      "status": "active",
+      "first_seen": "2026-04-18",
+      "source_collected_on": "2026-04-18"
+    },
+    {
+      "id": "robert-kaufman-kona-cotton-k001-25",
+      "name": "Ocean",
+      "sku": "K001-25",
+      "aliases": [],
+      "hex": "#1F45B8",
+      "hex_method": "vision_claude",
+      "hex_confidence": "low",
+      "hex_algorithmic": "#173B94",
+      "hex_source": {
+        "image_url": "https://www.robertkaufman.com/assets/fabric/detail/K001-25.jpg",
+        "image_sha256": "27aab78d2284846f312ab2b7bde973502f2baeb2994fa200589502d1df8f9cf0"
+      },
+      "manufacturer_product_url": "https://www.robertkaufman.com/fabrics/kona_cotton/K001-25/",
+      "status": "active",
+      "first_seen": "2026-04-18",
+      "source_collected_on": "2026-04-18"
+    },
+    {
+      "id": "robert-kaufman-kona-cotton-k001-7",
+      "name": "Tomato",
+      "sku": "K001-7",
+      "aliases": [],
+      "hex": "#E8401F",
+      "hex_method": "vision_claude",
+      "hex_confidence": "low",
+      "hex_algorithmic": "#DC241C",
+      "hex_source": {
+        "image_url": "https://www.robertkaufman.com/assets/fabric/detail/K001-7.jpg",
+        "image_sha256": "afb1840ff5503b32babea0696d4549074e0709cfd02a37bcb954e2ddac62a8ee"
+      },
+      "manufacturer_product_url": "https://www.robertkaufman.com/fabrics/kona_cotton/K001-7/",
+      "status": "active",
+      "first_seen": "2026-04-18",
+      "source_collected_on": "2026-04-18"
+    }
+  ]
+}
