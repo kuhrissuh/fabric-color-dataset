@@ -2,7 +2,9 @@
 
 An open-source fabric color dataset. Structured JSON files mapping real fabric colors (name, SKU, hex) to their source manufacturer pages. The repo is the product — versioned JSON files that other tools (web apps, iOS apps, quilt design tools) depend on as a data layer.
 
-**First target:** Art Gallery Fabrics Pure Solids (~203 colors).
+**First target:** Robert Kaufman Kona Cotton (~370 colors).
+
+Art Gallery Fabrics Pure Solids was the initial candidate but was deferred. AGF publishes flat rendered color blocks rather than fabric photography, which defeats the purpose of the vision-extraction pipeline. Kona uses real fabric photography (visible weave), so the pipeline is exercised end-to-end; adding AGF later as an algorithmic-only line is then a straightforward additive step.
 
 The core principle running through every decision below: **build the smallest version that does the thing, defer everything speculative, optimize for the case where you're the only user for a while.** The schema and the stability contract are load-bearing; most other infrastructure is not.
 
@@ -16,14 +18,14 @@ The schema is the API. Downstream tools pin to it, so it deserves the most care.
 
 ```json
 {
-  "id": "agf-pure-solids-pe-404",
-  "name": "Caramel",
-  "sku": "PE-404",
+  "id": "robert-kaufman-kona-cotton-k001-197",
+  "name": "Aloe",
+  "sku": "K001-197",
   "aliases": [],
-  "hex": "#8B4513",
+  "hex": "#7ED3B0",
   "hex_method": "vision_consensus",
   "hex_confidence": "high",
-  "hex_algorithmic": "#8A4412",
+  "hex_algorithmic": "#7BD1AE",
   "hex_source": {
     "image_url": "https://...",
     "image_sha256": "a3f2..."
@@ -62,22 +64,22 @@ The schema is the API. Downstream tools pin to it, so it deserves the most care.
   "schema_version": "1.0.0",
   "data_version": "0.1.0",
   "manufacturer": {
-    "name": "Art Gallery Fabrics",
-    "slug": "art-gallery-fabrics",
-    "website": "https://www.artgalleryfabrics.com"
+    "name": "Robert Kaufman",
+    "slug": "robert-kaufman",
+    "website": "https://www.robertkaufman.com"
   },
   "line": {
-    "name": "Pure Solids",
-    "slug": "pure-solids",
+    "name": "Kona Cotton",
+    "slug": "kona-cotton",
     "substrate": "cotton",
-    "weight_oz_per_sq_yd": 4.4,
+    "weight_oz_per_sq_yd": 4.35,
     "width_inches": 44
   },
-  "notes": "AGF's core solid cotton line. Known for a denser weave than comparable solids. Introduced 2013.",
+  "notes": "Robert Kaufman's flagship solid cotton line. Oeko-tex certified. The most widely used solid in US quilting.",
   "id_scheme": "manufacturer_sku",
   "generated_on": "2026-04-17",
   "generator_version": "0.1.0",
-  "color_count": 203,
+  "color_count": 370,
   "colors": [ ... ]
 }
 ```
@@ -88,10 +90,10 @@ The schema is the API. Downstream tools pin to it, so it deserves the most care.
 - **`data_version`** — content of this specific file. Bumps whenever colors change.
 - **`manufacturer`** and **`line`** — info shared across every color in the file. Per-color records only carry the URL that varies.
 - **`notes`** — one to three sentences of neutral factual context about the line. Not marketing copy, not care instructions, not opinions.
-- **`id_scheme`** — how IDs in this file were constructed. `manufacturer_sku` for AGF; future lines may use `name_slug` if the manufacturer doesn't publish clean SKUs.
+- **`id_scheme`** — how IDs in this file were constructed. `manufacturer_sku` for Kona; future lines may use `name_slug` if the manufacturer doesn't publish clean SKUs.
 - **`generated_on`** — date the pipeline last produced this file.
 - **`generator_version`** — version of the pipeline. Separate from `data_version` because the process can change independently of the data.
-- **`color_count`** — redundant with `colors.length` but useful for sanity-checking downloads and for readable diffs ("we went from 203 to 204").
+- **`color_count`** — redundant with `colors.length` but useful for sanity-checking downloads and for readable diffs ("we went from 370 to 371").
 
 **Units:** imperial (`weight_oz_per_sq_yd`, `width_inches`). Matches the quilting domain. When a European line is eventually added, convert to imperial for consistency within the dataset.
 
@@ -119,13 +121,13 @@ fabric-color-dataset/
 │   └── README.md         (field-by-field documentation)
 │
 ├── data/
-│   └── art-gallery-fabrics/
-│       ├── pure-solids.json
-│       └── pure-solids.changelog.md
+│   └── robert-kaufman/
+│       ├── kona-cotton.json
+│       └── kona-cotton.changelog.md
 │
 ├── configs/
-│   └── art-gallery-fabrics/
-│       └── pure-solids.yaml
+│   └── robert-kaufman/
+│       └── kona-cotton.yaml
 │
 ├── pipeline/
 │   ├── README.md
@@ -145,8 +147,8 @@ fabric-color-dataset/
 │   └── tests/
 │
 ├── raw/                  (git-lfs: snapshot HTML + swatch images)
-│   └── art-gallery-fabrics/
-│       └── pure-solids/
+│   └── robert-kaufman/
+│       └── kona-cotton/
 │           ├── html/
 │           └── images/
 │
@@ -168,7 +170,7 @@ fabric-color-dataset/
 - **`STABILITY.md` as its own document.** Not buried in the README. Signals that stability is a commitment, not a suggestion.
 - **`/schemas` as a peer of `/data`.** The JSON Schema is itself a product. When v2 comes, `v2.json` lives beside `v1.json` and old consumers keep validating forever.
 - **`/data` organized manufacturer/line.** One level of namespacing matches how people think about fabrics. Flat breaks on name collisions; deeper is over-engineering.
-- **Per-file changelogs** (`pure-solids.changelog.md`) sit next to data files. Git has the raw diff; the changelog has the *why*.
+- **Per-file changelogs** (`kona-cotton.changelog.md`) sit next to data files. Git has the raw diff; the changelog has the *why*.
 - **`/configs` separate from `/pipeline`.** The lever for scaling contributions: adding a new line should ideally mean writing YAML, not Python. Custom logic goes in `pipeline/src/scrapers/` as a documented exception.
 - **`/raw` for source snapshots via git-lfs.** Enables reproducibility (re-run vision on the same bytes when the prompt improves) and audit trail. For v0.1, LFS in-repo is simpler than external storage; migrate if it becomes a problem.
 
@@ -229,16 +231,16 @@ One cache directory at `~/.cache/fabric-color-dataset/{stage}/{content_hash}.jso
 Plain Python CLI. No workflow framework (Airflow, Prefect, etc.). The dependency graph is linear, scale is small, and frameworks add surface area that outlasts the reason for adopting them.
 
 ```
-fabric-colors run --line art-gallery-fabrics/pure-solids
+fabric-colors run --line robert-kaufman/kona-cotton
 fabric-colors run --all
-fabric-colors run --line art-gallery-fabrics/pure-solids --stage extract --force
+fabric-colors run --line robert-kaufman/kona-cotton --stage extract --force
 ```
 
 ### Error handling
 
 Two categories:
 
-- **Transient** (network timeout, rate limit, 503): retry with backoff, fail the stage for that item, continue with others. "Scraped 202/203 colors; PE-451 failed, will retry next run."
+- **Transient** (network timeout, rate limit, 503): retry with backoff, fail the stage for that item, continue with others. "Scraped 369/370 colors; K001-1234 failed, will retry next run."
 - **Structural** (parse failure on a previously-working page, validation failure, non-hex extraction result): fail loud, halt the pipeline, no write. These indicate a site change or pipeline bug; silent continuation corrupts data.
 
 Test: **can this error resolve itself on retry?** Yes = transient. No = structural.
@@ -333,9 +335,9 @@ elif ΔE >= 7:
 
 ### Cost
 
-Rough estimate at AGF Pure Solids scale (203 colors):
+Rough estimate at Kona Cotton scale (370 colors):
 
-- Initial extraction: ~203 vision calls. Well under $5 at current Claude pricing.
+- Initial extraction: ~370 vision calls. Well under $10 at current Claude pricing.
 - Weekly runs: near-zero (cache hits everywhere).
 - Prompt version bumps: full re-extraction, same as initial.
 
@@ -343,7 +345,7 @@ Cost is a non-issue. The constraint is quality.
 
 ### Calibration
 
-Before running on all 203, run a calibration pass on 10–15 colors with known-trustworthy swatches (mix of dark neutrals, saturated, pastels, one tricky one). Extract, eyeball against sources, tune the prompt. Then run the full set.
+Before running on all 370, run a calibration pass on 10–15 colors with known-trustworthy swatches (mix of dark neutrals, saturated, pastels, one tricky one). Extract, eyeball against sources, tune the prompt. Then run the full set.
 
 ---
 
@@ -378,19 +380,19 @@ Skimmable in under a minute:
 ## Weekly update — 2026-04-17
 
 ### Summary
-- Added 2 new colors (AGF Pure Solids S/S 2026 release)
+- Added 2 new colors (Kona Cotton 2026 release)
 - 1 color marked discontinued
 - 3 hex values updated (manufacturer swatch photo changes)
 - 0 colors flagged for review
 
 ### Added
-- `agf-pure-solids-pe-550` "Apricot Dream" — hex #F4A9...
+- `robert-kaufman-kona-cotton-k001-9001` "Apricot Dream" — hex #F4A9...
 
 ### Discontinued
-- `agf-pure-solids-pe-487` "Vintage Rose"
+- `robert-kaufman-kona-cotton-k001-9002` "Vintage Rose"
 
 ### Hex updates
-- `agf-pure-solids-pe-404` "Caramel": #8B4513 → #8C4614 (ΔE=0.8)
+- `robert-kaufman-kona-cotton-k001-9003` "Caramel": #8B4513 → #8C4614 (ΔE=0.8)
 
 ### Low-confidence (review needed)
 None this run.
@@ -418,7 +420,7 @@ Decoupled from weekly updates. Manual tag push when stable; `release.yml` workfl
 **v0.1: jsDelivr CDN only.**
 
 ```
-https://cdn.jsdelivr.net/gh/yourname/fabric-color-dataset@v0.1.0/data/art-gallery-fabrics/pure-solids.json
+https://cdn.jsdelivr.net/gh/yourname/fabric-color-dataset@v0.1.0/data/robert-kaufman/kona-cotton.json
 ```
 
 - Free, fast, globally cached, versioned by git tag.
@@ -495,16 +497,16 @@ Things we discussed and deliberately left out, so "why isn't this here?" has a c
 
 1. Set up the repo skeleton (READMEs, LICENSE files, STABILITY.md, `schemas/v1.json`, empty data directory, pipeline scaffolding).
 2. Write the JSON Schema and a validator.
-3. Build the AGF scraper end-to-end for 10–15 calibration colors — hardcode URLs, get the full pipeline working on a small set.
+3. Build the Kona scraper end-to-end for 10–15 calibration colors — hardcode URLs, get the full pipeline working on a small set.
 4. Tune the vision prompt against the calibration set until results look right.
-5. Run on all 203 colors, review low-confidence entries, ship v0.1.0 with jsDelivr distribution.
+5. Run on all 370 colors, review low-confidence entries, ship v0.1.0 with jsDelivr distribution.
 6. Use it in one downstream tool yourself.
 
 Step 6 is the most important. Consuming your own dataset is how you find out whether the schema is actually good. Every schema looks fine in the abstract; only use reveals what's missing or awkward.
 
 ### Key reminders during the build
 
-- **The calibration pass is non-negotiable.** Don't skip to running all 203.
+- **The calibration pass is non-negotiable.** Don't skip to running all 370.
 - **Slow read of the schema once more before generating data against it.** Changing the schema after v0.1.0 with real consumers costs real work.
 - **Your own consumer is the most important consumer.** Prioritize getting to step 6 even if the dataset feels rough.
 - **Ship the good version, not the perfect one.** Everything here is designed to evolve; the stability contract exists so you can ship now and change later.

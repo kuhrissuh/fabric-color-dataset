@@ -24,16 +24,16 @@ Semver of this file's content. Bumps whenever the color list changes.
 
 Object describing the manufacturer of this fabric line.
 
-- `name` — display name (e.g. `"Art Gallery Fabrics"`).
-- `slug` — URL-safe identifier used in color IDs and the filesystem path (e.g. `"art-gallery-fabrics"`). Lowercase, hyphen-separated, `^[a-z0-9]+(-[a-z0-9]+)*$`. Spelled out to stay self-documenting; there is no separate short form.
+- `name` — display name (e.g. `"Robert Kaufman"`).
+- `slug` — URL-safe identifier used in color IDs and the filesystem path (e.g. `"robert-kaufman"`). Lowercase, hyphen-separated, `^[a-z0-9]+(-[a-z0-9]+)*$`. Spelled out to stay self-documenting; there is no separate short form.
 - `website` — manufacturer's homepage.
 
 ### `line`
 
 Object describing the specific fabric line.
 
-- `name` — display name (e.g. `"Pure Solids"`).
-- `slug` — URL-safe identifier used in color IDs (e.g. `"pure-solids"`).
+- `name` — display name (e.g. `"Kona Cotton"`).
+- `slug` — URL-safe identifier used in color IDs (e.g. `"kona-cotton"`).
 - `substrate` — fabric type, lowercase (e.g. `"cotton"`).
 - `weight_oz_per_sq_yd` — fabric weight, imperial. Positive number.
 - `width_inches` — bolt width, imperial. Positive number.
@@ -81,7 +81,7 @@ Display name. Can change; the `id` does not follow.
 
 ### `sku`
 
-Manufacturer SKU as printed on the source page (e.g. `"PE-404"`). Preserved as its own field so consumers need not parse IDs.
+Manufacturer SKU as printed on the source page (e.g. `"K001-197"`). Preserved as its own field so consumers need not parse IDs.
 
 ### `aliases`
 

@@ -12,15 +12,15 @@ VALID: dict[str, Any] = {
     "schema_version": "1.0.0",
     "data_version": "0.1.0",
     "manufacturer": {
-        "name": "Art Gallery Fabrics",
-        "slug": "art-gallery-fabrics",
-        "website": "https://www.artgalleryfabrics.com",
+        "name": "Robert Kaufman",
+        "slug": "robert-kaufman",
+        "website": "https://www.robertkaufman.com",
     },
     "line": {
-        "name": "Pure Solids",
-        "slug": "pure-solids",
+        "name": "Kona Cotton",
+        "slug": "kona-cotton",
         "substrate": "cotton",
-        "weight_oz_per_sq_yd": 4.4,
+        "weight_oz_per_sq_yd": 4.35,
         "width_inches": 44,
     },
     "notes": "Core solids line.",
@@ -30,19 +30,19 @@ VALID: dict[str, Any] = {
     "color_count": 1,
     "colors": [
         {
-            "id": "art-gallery-fabrics-pure-solids-pe-404",
-            "name": "Caramel",
-            "sku": "PE-404",
+            "id": "robert-kaufman-kona-cotton-k001-197",
+            "name": "Aloe",
+            "sku": "K001-197",
             "aliases": [],
-            "hex": "#8B4513",
+            "hex": "#7ED3B0",
             "hex_method": "vision_consensus",
             "hex_confidence": "high",
-            "hex_algorithmic": "#8A4412",
+            "hex_algorithmic": "#7BD1AE",
             "hex_source": {
-                "image_url": "https://example.com/pe-404.jpg",
+                "image_url": "https://example.com/k001-197.jpg",
                 "image_sha256": "a" * 64,
             },
-            "manufacturer_product_url": "https://example.com/pe-404",
+            "manufacturer_product_url": "https://example.com/k001-197",
             "status": "active",
             "first_seen": "2026-04-17",
             "source_collected_on": "2026-04-17",
@@ -60,10 +60,10 @@ def test_valid_passes():
 
 
 def test_slugify_handles_spaces_and_punctuation():
-    assert validate.slugify("PE-404") == "pe-404"
-    assert validate.slugify("PE 404") == "pe-404"
-    assert validate.slugify("PE/404") == "pe-404"
-    assert validate.slugify("  PE---404  ") == "pe-404"
+    assert validate.slugify("K001-197") == "k001-197"
+    assert validate.slugify("K001 197") == "k001-197"
+    assert validate.slugify("K001/197") == "k001-197"
+    assert validate.slugify("  K001---197  ") == "k001-197"
 
 
 def test_color_count_mismatch():
@@ -75,14 +75,14 @@ def test_color_count_mismatch():
 
 def test_id_does_not_match_slugs():
     data = fresh()
-    data["colors"][0]["id"] = "art-gallery-fabrics-pure-solids-wrong"
+    data["colors"][0]["id"] = "robert-kaufman-kona-cotton-wrong"
     with pytest.raises(validate.ValidationError, match="expected"):
         validate.validate(data)
 
 
 def test_id_derives_from_slugified_sku():
     data = fresh()
-    data["colors"][0]["sku"] = "PE 404"
+    data["colors"][0]["sku"] = "K001 197"
     validate.validate(data)
 
 
@@ -111,7 +111,7 @@ def test_source_collected_after_generated():
 
 def test_lowercase_hex_rejected():
     data = fresh()
-    data["colors"][0]["hex"] = "#8b4513"
+    data["colors"][0]["hex"] = "#7ed3b0"
     with pytest.raises(jsonschema.ValidationError):
         validate.validate(data)
 
@@ -153,7 +153,7 @@ def test_timestamp_in_date_field_rejected():
 
 def test_uppercase_slug_rejected():
     data = fresh()
-    data["manufacturer"]["slug"] = "Art-Gallery-Fabrics"
+    data["manufacturer"]["slug"] = "Robert-Kaufman"
     with pytest.raises(jsonschema.ValidationError):
         validate.validate(data)
 

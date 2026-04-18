@@ -2,7 +2,9 @@
 
 Open-source fabric color dataset. Structured JSON files mapping fabric colors (name, SKU, hex) to their source manufacturer pages. The repo is the product — other tools depend on it as a data layer.
 
-**First target:** Art Gallery Fabrics Pure Solids (~203 colors).
+**First target:** Robert Kaufman Kona Cotton (~370 colors).
+
+Art Gallery Fabrics Pure Solids was the initial candidate but was deferred: AGF publishes flat rendered swatches rather than fabric photography, so the line wouldn't exercise the full vision extraction pipeline. AGF is a post-v0.1 addition as an algorithmic-only line.
 
 Full project rationale lives in `docs/project-plan.md`. This file is operational context — constraints to remember every session.
 
