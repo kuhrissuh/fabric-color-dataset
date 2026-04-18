@@ -1,0 +1,40 @@
+manufacturer:
+  name: Robert Kaufman
+  slug: robert-kaufman
+  website: https://www.robertkaufman.com
+
+line:
+  name: Kona Cotton
+  slug: kona-cotton
+  substrate: cotton
+  weight_oz_per_sq_yd: 4.35
+  width_inches: 44
+
+notes: >-
+  Robert Kaufman's flagship solid cotton line. Oeko-Tex certified. The most
+  widely used solid in US quilting.
+
+id_scheme: manufacturer_sku
+
+scraper: robert_kaufman
+
+url_templates:
+  product: "https://www.robertkaufman.com/fabrics/kona_cotton/{sku}/"
+  image: "https://www.robertkaufman.com/assets/fabric/detail/{sku}.jpg"
+
+# Calibration set for v0.1 step 3. Hand-picked to span the luminance/chroma
+# space (dark neutrals, saturated, pastels, near-white, tricky high-chroma
+# green). Expand to all ~370 SKUs only after calibration succeeds in step 5.
+skus:
+  - K001-1019   # BLACK
+  - K001-1080   # COAL
+  - K001-1083   # COFFEE
+  - K001-7      # TOMATO
+  - K001-23     # LEMON
+  - K001-25     # OCEAN
+  - K001-1188   # KIWI
+  - K001-21     # HONEY DEW
+  - K001-197    # ALOE
+  - K001-1514   # ROBIN EGG
+  - K001-1387   # WHITE
+  - K001-1072   # CHARTREUSE
