@@ -3,9 +3,12 @@
 name: Weekly data update
 
 on:
-  schedule:
-    # Monday ~04:00 UTC (plan: "Monday ~4am UTC")
-    - cron: '0 4 * * 1'
+  # Cron paused while we rethink the weekly-from-GHA model — fetches from
+  # GitHub runner IPs hit intermittent 403/404s on robertkaufman.com and
+  # fetch.py does not yet implement per-item resilience. See issue #9.
+  # Re-enable the schedule once that's settled.
+  # schedule:
+  #   - cron: '0 4 * * 1'
   workflow_dispatch: {}
 
 permissions:
