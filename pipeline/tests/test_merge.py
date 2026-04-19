@@ -66,7 +66,8 @@ def _extraction(
     )
     return ExtractionResult(
         parsed=parsed,
-        algorithmic=AlgorithmicResult(hex=algorithmic_hex or hex_, std_dev=1.0),
+        algorithmic=AlgorithmicResult(hex=algorithmic_hex or hex_, std_dev=1.0, std_a=1.0, std_b=1.0),
+        classification="photograph",
         vision=VisionResult(hex=hex_, confidence=confidence, observations="", warnings=[]),
         delta_e=0.5,
         final_hex=hex_,
