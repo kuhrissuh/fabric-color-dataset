@@ -1,0 +1,33 @@
+manufacturer:
+  name: Riley Blake Designs
+  slug: riley-blake-designs
+  website: https://www.rileyblakedesigns.com
+
+line:
+  name: Confetti Cottons
+  slug: confetti-cottons
+  substrate: cotton
+  weight_oz_per_sq_yd: 4.1
+  width_inches: 44
+
+notes: >-
+  Riley Blake Designs' solid cotton line, sold as Confetti Cotton™ Solids.
+  The manufacturer website is backed by a NetSuite SCA JSON catalog; the
+  scraper paginates that API rather than scraping HTML and filters the 410
+  category items down to the 300 base colors (SKUs matching `^C120-[A-Z0-9]+$`,
+  excluding precuts, 20-yard bolts, and swatch cards). Like Art Gallery
+  Fabrics Pure Solids, images are flat rendered swatches rather than fabric
+  photographs, so the classifier routes them to the algorithmic-only branch.
+
+id_scheme: manufacturer_sku
+
+scraper: riley_blake_designs
+
+# NetSuite SCA cacheable-items endpoint. `limit` is capped at 100 by the
+# server; discover paginates by rewriting `offset=0` to `offset=100`, 200, etc.
+# The image URL is built per-SKU from itemid in the scraper — the API returns
+# URLs with unencoded spaces, so a template field would be misleading.
+url_templates:
+  product: "https://www.rileyblakedesigns.com/api/cacheable/items?c=4582045&commercecategoryurl=%2FFabric%2FBasics%2FConfetti-Cottons&country=US&currency=USD&fieldset=search&language=en&limit=100&offset=0&use_pcv=T"
+
+skus: []

@@ -12,6 +12,15 @@
       "data_version": "0.2.0"
     },
     {
+      "manufacturer_slug": "riley-blake-designs",
+      "line_slug": "confetti-cottons",
+      "path": "riley-blake-designs/confetti-cottons.json",
+      "manufacturer_name": "Riley Blake Designs",
+      "line_name": "Confetti Cottons",
+      "color_count": 300,
+      "data_version": "0.1.0"
+    },
+    {
       "manufacturer_slug": "robert-kaufman",
       "line_slug": "kona-cotton",
       "path": "robert-kaufman/kona-cotton.json",
