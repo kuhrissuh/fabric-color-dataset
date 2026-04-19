@@ -24,6 +24,12 @@ https://cdn.jsdelivr.net/gh/kuhrissuh/fabric-color-dataset@v0.1.0/data/robert-ka
 
 Use `@main` for the latest (unreleased) data.
 
+A manifest of every line in the dataset lives at `data/index.json`, so consumers don't have to hardcode line paths:
+
+```
+https://cdn.jsdelivr.net/gh/kuhrissuh/fabric-color-dataset@v0.1.0/data/index.json
+```
+
 ## Stability
 
 See [STABILITY.md](STABILITY.md) for the full stability contract — what you can rely on across versions.

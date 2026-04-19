@@ -4,6 +4,8 @@ JSON Schema describing the shape of a fabric color line file. Consumers pin on `
 
 The authoritative definition is [`v1.json`](./v1.json). This document explains each field.
 
+A separate schema, [`index_v1.json`](./index_v1.json), describes [`/data/index.json`](../data/index.json) — the manifest listing every line file in the dataset. Each entry mirrors the per-file header (`manufacturer_slug`, `line_slug`, `manufacturer_name`, `line_name`, `path`, `color_count`, `data_version`) so consumers can render a picker without fetching every line file.
+
 ---
 
 ## File-level fields

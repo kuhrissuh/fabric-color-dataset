@@ -13,6 +13,7 @@ import jsonschema
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 SCHEMA_PATH = REPO_ROOT / "schemas" / "v1.json"
+INDEX_SCHEMA_PATH = REPO_ROOT / "schemas" / "index_v1.json"
 
 
 class ValidationError(Exception):
@@ -29,6 +30,11 @@ def load_schema() -> dict[str, Any]:
         return json.load(f)
 
 
+def load_index_schema() -> dict[str, Any]:
+    with INDEX_SCHEMA_PATH.open() as f:
+        return json.load(f)
+
+
 def validate(data: dict[str, Any]) -> None:
     """Validate a parsed data file. Raises on first failure."""
     jsonschema.Draft202012Validator(load_schema()).validate(data)
@@ -38,6 +44,16 @@ def validate(data: dict[str, Any]) -> None:
 def validate_file(path: Path) -> None:
     with path.open() as f:
         validate(json.load(f))
+
+
+def validate_index(data: dict[str, Any]) -> None:
+    """Validate a parsed data/index.json against its schema."""
+    jsonschema.Draft202012Validator(load_index_schema()).validate(data)
+
+
+def validate_index_file(path: Path) -> None:
+    with path.open() as f:
+        validate_index(json.load(f))
 
 
 def _check_structural(data: dict[str, Any]) -> None:

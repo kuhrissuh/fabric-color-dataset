@@ -152,6 +152,10 @@ def _cmd_run(
     validate_mod.validate_file(data_path)
     print("validate: ok")
 
+    index_p = write_mod.write_index(today)
+    validate_mod.validate_index_file(index_p)
+    print(f"wrote: {index_p}")
+
     _print_summary(diff)
 
     if summary_path:

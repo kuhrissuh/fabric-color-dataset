@@ -18,11 +18,16 @@ REPO_ROOT = Path(__file__).resolve().parents[2]
 DATA_DIR = REPO_ROOT / "data"
 
 SCHEMA_VERSION = "1.0.0"
+INDEX_SCHEMA_VERSION = "1.0.0"
 GENERATOR_VERSION = "0.1.0"
 
 
 def data_path(config: LineConfig) -> Path:
     return DATA_DIR / config.manufacturer.slug / f"{config.line.slug}.json"
+
+
+def index_path(data_dir: Path = DATA_DIR) -> Path:
+    return data_dir / "index.json"
 
 
 def changelog_path(config: LineConfig) -> Path:
@@ -69,6 +74,42 @@ def write(
 
     _append_changelog(config, diff, today, new_version)
     return data_p, new_version
+
+
+def write_index(today: date, data_dir: Path = DATA_DIR) -> Path:
+    """Regenerate data/index.json by scanning per-line files on disk.
+
+    Reads from disk (not in-memory state) so a single-line pipeline run
+    refreshes the full manifest, and a one-time backfill works the same way.
+    """
+    entries = []
+    for path in data_dir.glob("*/*.json"):
+        with path.open() as f:
+            doc = json.load(f)
+        manufacturer = doc["manufacturer"]
+        line = doc["line"]
+        entries.append(
+            {
+                "manufacturer_slug": manufacturer["slug"],
+                "line_slug": line["slug"],
+                "path": f"{manufacturer['slug']}/{line['slug']}.json",
+                "manufacturer_name": manufacturer["name"],
+                "line_name": line["name"],
+                "color_count": doc["color_count"],
+                "data_version": doc["data_version"],
+            }
+        )
+    entries.sort(key=lambda e: (e["manufacturer_slug"], e["line_slug"]))
+
+    payload = {
+        "schema_version": INDEX_SCHEMA_VERSION,
+        "generated_on": today.isoformat(),
+        "lines": entries,
+    }
+
+    out = index_path(data_dir)
+    out.write_text(json.dumps(payload, indent=2) + "\n")
+    return out
 
 
 def load_prior_data_version(config: LineConfig) -> str:
