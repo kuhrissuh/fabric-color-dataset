@@ -8,10 +8,12 @@ swapped manufacturer swatch photos.
 from __future__ import annotations
 
 import hashlib
+import re
 import time
 from datetime import date
 from pathlib import Path
 from typing import List, Optional
+from urllib.parse import urlparse
 
 import requests
 
@@ -53,7 +55,7 @@ def fetch(
         return url_cache[url]
 
     for item in discovered:
-        html_path = html_dir / f"{item.sku}.html"
+        html_path = html_dir / f"{_url_slug(item.product_url)}.html"
         image_path = image_dir / f"{item.sku}.jpg"
 
         html_bytes = _cached_get(item.product_url)
@@ -75,6 +77,28 @@ def fetch(
             )
         )
     return out
+
+
+def _url_slug(url: str) -> str:
+    """Derive a stable filename stem from a URL.
+
+    Uses the last non-empty path segment. If that segment is purely
+    numeric (e.g. paginated URLs ending `/page/2/`), prepends the
+    preceding segment to keep the name self-describing.
+
+    Per-SKU scrapers (Kona: `.../kona_cotton/K001-197/`) keep their
+    SKU-looking filename. Shared-URL scrapers (AGF's single catalog
+    page) collapse to one file per unique URL. Falls back to a hash
+    when the URL has no usable path.
+    """
+    segments = [s for s in urlparse(url).path.split("/") if s]
+    if not segments:
+        return hashlib.sha1(url.encode()).hexdigest()[:16]
+    tail = [segments[-1]]
+    if len(segments) >= 2 and segments[-1].isdigit():
+        tail = [segments[-2], segments[-1]]
+    slug = re.sub(r"[^A-Za-z0-9._-]+", "-", "-".join(tail)).strip("-.")
+    return slug or hashlib.sha1(url.encode()).hexdigest()[:16]
 
 
 def _get(session: requests.Session, url: str) -> bytes:
