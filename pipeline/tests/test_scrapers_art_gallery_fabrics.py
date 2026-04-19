@@ -157,20 +157,39 @@ def test_parses_multiple_entries():
     assert entries[1][0] == "PES900"
 
 
+def _page_url(n: int) -> str:
+    return CATALOG_URL if n == 1 else f"{CATALOG_URL}page/{n}/"
+
+
+def _paginated_responder(pages: dict[int, bytes]):
+    """Return a callable to patch `_http_get` that serves per-page HTML."""
+    def responder(url: str) -> bytes:
+        for page_num, html in pages.items():
+            if url == _page_url(page_num):
+                return html
+        raise AssertionError(f"unexpected URL fetched: {url}")
+    return responder
+
+
 def test_discover_returns_one_per_entry(monkeypatch):
-    html = _catalog_html(
-        [
-            _fancybox(
-                "PE-594 Storm",
-                "https://liveartgalleryfabrics.com/wp-content/uploads/2020/01/storm.jpg",
-            ),
-            _fancybox(
-                "PES900 Monet",
-                "https://liveartgalleryfabrics.com/wp-content/uploads/2020/01/monet.jpg",
-            ),
-        ]
+    pages = {
+        1: _catalog_html(
+            [
+                _fancybox(
+                    "PE-594 Storm",
+                    "https://liveartgalleryfabrics.com/wp-content/uploads/2020/01/storm.jpg",
+                ),
+                _fancybox(
+                    "PES900 Monet",
+                    "https://liveartgalleryfabrics.com/wp-content/uploads/2020/01/monet.jpg",
+                ),
+            ]
+        ),
+        2: b"<html><body></body></html>",
+    }
+    monkeypatch.setattr(
+        art_gallery_fabrics, "_http_get", _paginated_responder(pages)
     )
-    monkeypatch.setattr(art_gallery_fabrics, "_http_get", lambda _url: html)
 
     discovered = art_gallery_fabrics.discover(_config())
 
@@ -180,11 +199,62 @@ def test_discover_returns_one_per_entry(monkeypatch):
     assert discovered[1].image_url.endswith("/monet.jpg")
 
 
-def test_discover_raises_when_catalog_empty(monkeypatch):
+def test_discover_walks_pages_until_empty(monkeypatch):
+    pages = {
+        1: _catalog_html([_fancybox("PE-594 Storm")]),
+        2: _catalog_html([_fancybox("PE-595 Rain")]),
+        3: _catalog_html([_fancybox("PE-596 Mist")]),
+        4: b"<html><body></body></html>",
+    }
+    monkeypatch.setattr(
+        art_gallery_fabrics, "_http_get", _paginated_responder(pages)
+    )
+
+    discovered = art_gallery_fabrics.discover(_config())
+
+    assert [d.sku for d in discovered] == ["PE-594", "PE-595", "PE-596"]
+    # Each discovered color keeps the page URL it was found on so fetch
+    # downloads each page once.
+    assert discovered[0].product_url == CATALOG_URL
+    assert discovered[1].product_url == f"{CATALOG_URL}page/2/"
+    assert discovered[2].product_url == f"{CATALOG_URL}page/3/"
+
+
+def test_discover_dedupes_skus_across_pages(monkeypatch):
+    pages = {
+        1: _catalog_html([_fancybox("PE-594 Storm")]),
+        2: _catalog_html(
+            [
+                _fancybox("PE-594 Storm"),  # duplicate
+                _fancybox("PE-595 Rain"),
+            ]
+        ),
+        3: b"<html><body></body></html>",
+    }
+    monkeypatch.setattr(
+        art_gallery_fabrics, "_http_get", _paginated_responder(pages)
+    )
+
+    discovered = art_gallery_fabrics.discover(_config())
+
+    assert [d.sku for d in discovered] == ["PE-594", "PE-595"]
+    # First occurrence wins — PE-594 keeps page 1 URL, not page 2.
+    assert discovered[0].product_url == CATALOG_URL
+
+
+def test_discover_raises_when_page_one_empty(monkeypatch):
     monkeypatch.setattr(
         art_gallery_fabrics, "_http_get", lambda _url: b"<html><body></body></html>"
     )
     with pytest.raises(art_gallery_fabrics.ParseError, match="no Pure Solids gallery entries"):
+        art_gallery_fabrics.discover(_config())
+
+
+def test_discover_raises_when_pagination_does_not_terminate(monkeypatch):
+    # Every page returns the same non-empty HTML — halt detection never triggers.
+    html = _catalog_html([_fancybox("PE-594 Storm")])
+    monkeypatch.setattr(art_gallery_fabrics, "_http_get", lambda _url: html)
+    with pytest.raises(art_gallery_fabrics.ParseError, match="pagination did not terminate"):
         art_gallery_fabrics.discover(_config())
 
 
@@ -193,6 +263,24 @@ def test_parse_returns_name_for_matching_sku():
     parsed = art_gallery_fabrics.parse(html, _fetched("PE-594"), _config())
     assert parsed.sku == "PE-594"
     assert parsed.name == "Storm"
+    assert parsed.product_url == CATALOG_URL
+
+
+def test_parse_rewrites_product_url_to_canonical_catalog(monkeypatch):
+    # Even when the SKU was fetched from a page-N URL, the parsed record
+    # carries the canonical catalog URL — the data file must not leak the
+    # page index the scraper happened to land on.
+    html = _catalog_html([_fancybox("PE-594 Storm")])
+    fetched = FetchedColor(
+        sku="PE-594",
+        product_url=f"{CATALOG_URL}page/5/",
+        image_url="https://example.com/PE-594.jpg",
+        html_path=Path("/tmp/PE-594.html"),
+        image_path=Path("/tmp/PE-594.jpg"),
+        image_sha256="a" * 64,
+        fetched_on=date(2026, 4, 19),
+    )
+    parsed = art_gallery_fabrics.parse(html, fetched, _config())
     assert parsed.product_url == CATALOG_URL
 
 
