@@ -1,0 +1,124 @@
+# Requires repo secret ANTHROPIC_API_KEY (Claude vision extraction).
+# Uses the default GITHUB_TOKEN for commit + PR — no PAT needed.
+name: Weekly data update
+
+on:
+  schedule:
+    # Monday ~04:00 UTC (plan: "Monday ~4am UTC")
+    - cron: '0 4 * * 1'
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: weekly-update
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    env:
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      # When additional lines ship, promote this to a matrix and run one
+      # pipeline invocation per line. For v0.1 there's only Kona.
+      LINE: robert-kaufman/kona-cotton
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install pipeline
+        run: pip install -e ./pipeline
+
+      - name: Restore extraction cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/fabric-color-dataset
+          # Busts when prompts, pipeline code, or schema change — all of
+          # which could legitimately invalidate cached extractions.
+          key: fcd-cache-${{ hashFiles('pipeline/prompts/*.md', 'pipeline/src/**/*.py', 'schemas/v1.json') }}
+          restore-keys: |
+            fcd-cache-
+
+      - name: Compute run date
+        id: date
+        run: echo "value=$(date -u +%Y-%m-%d)" >> "$GITHUB_OUTPUT"
+
+      - name: Run pipeline
+        id: run
+        run: |
+          set +e
+          python pipeline/src/cli.py run \
+            --line "$LINE" \
+            --summary-json summary.json
+          echo "exit_code=$?" >> "$GITHUB_OUTPUT"
+
+      - name: Render job summary
+        if: always() && hashFiles('summary.json') != ''
+        run: |
+          python .github/scripts/format_run_summary.py \
+            summary.json "${{ steps.date.outputs.value }}" \
+            >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Fail loudly on halt
+        if: steps.run.outputs.exit_code == '2'
+        run: |
+          echo "::error::Pipeline halted — see job summary for reason. No PR opened." >&2
+          exit 1
+
+      - name: Fail on unexpected pipeline error
+        if: steps.run.outputs.exit_code != '0' && steps.run.outputs.exit_code != '2'
+        run: |
+          echo "::error::Pipeline exited with code ${{ steps.run.outputs.exit_code }}" >&2
+          exit 1
+
+      - name: Check whether anything material changed
+        id: check_changed
+        run: |
+          CHANGED=$(python -c "import json; print('true' if json.load(open('summary.json')).get('changed') else 'false')")
+          echo "value=$CHANGED" >> "$GITHUB_OUTPUT"
+
+      - name: Discard non-material diffs when unchanged
+        if: steps.check_changed.outputs.value == 'false'
+        run: |
+          # Pipeline always rewrites the JSON to update generated_on; when
+          # nothing material changed, the resulting diff is noise.
+          git restore data raw || true
+          echo "No material changes this week. Skipping PR."
+
+      - name: Configure git author
+        if: steps.check_changed.outputs.value == 'true'
+        run: |
+          git config user.name 'fabric-color-dataset bot'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+
+      - name: Commit and push update branch
+        if: steps.check_changed.outputs.value == 'true'
+        id: commit
+        run: |
+          BRANCH="weekly-update/${{ steps.date.outputs.value }}"
+          git checkout -b "$BRANCH"
+          git add data raw
+          git commit -m "Weekly update — ${{ steps.date.outputs.value }}"
+          git push -u origin "$BRANCH"
+          echo "branch=$BRANCH" >> "$GITHUB_OUTPUT"
+
+      - name: Open PR
+        if: steps.check_changed.outputs.value == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          python .github/scripts/format_run_summary.py \
+            summary.json "${{ steps.date.outputs.value }}" \
+            > pr_body.md
+          gh pr create \
+            --base main \
+            --head "${{ steps.commit.outputs.branch }}" \
+            --title "Weekly update — ${{ steps.date.outputs.value }}" \
+            --body-file pr_body.md
