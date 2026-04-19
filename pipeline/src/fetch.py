@@ -43,14 +43,23 @@ def fetch(
 
     today = date.today()
     out: List[FetchedColor] = []
+    # Dedupe identical URLs within one run (e.g. manufacturers that expose
+    # every color on a single catalog page — same HTML shared by every SKU).
+    url_cache: dict[str, bytes] = {}
+
+    def _cached_get(url: str) -> bytes:
+        if url not in url_cache:
+            url_cache[url] = _get(session, url)
+        return url_cache[url]
+
     for item in discovered:
         html_path = html_dir / f"{item.sku}.html"
         image_path = image_dir / f"{item.sku}.jpg"
 
-        html_bytes = _get(session, item.product_url)
+        html_bytes = _cached_get(item.product_url)
         html_path.write_bytes(html_bytes)
 
-        image_bytes = _get(session, item.image_url)
+        image_bytes = _cached_get(item.image_url)
         image_path.write_bytes(image_bytes)
         image_sha = hashlib.sha256(image_bytes).hexdigest()
 

@@ -37,7 +37,7 @@ class LineConfig:
     id_scheme: str
     scraper: str
     product_url_template: str
-    image_url_template: str
+    image_url_template: Optional[str]
     skus: List[str]
 
 
@@ -73,7 +73,9 @@ class ParsedColor:
 @dataclass(frozen=True)
 class AlgorithmicResult:
     hex: str
-    std_dev: float
+    std_dev: float  # L-channel spread
+    std_a: float
+    std_b: float
 
 
 @dataclass(frozen=True)
@@ -88,7 +90,8 @@ class VisionResult:
 class ExtractionResult:
     parsed: ParsedColor
     algorithmic: AlgorithmicResult
-    vision: VisionResult
+    classification: str  # "photograph" | "rendered_swatch"
+    vision: Optional[VisionResult]
     delta_e: float
     final_hex: str
     final_method: str

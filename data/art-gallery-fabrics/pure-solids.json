@@ -1,0 +1,833 @@
+{
+  "schema_version": "1.0.0",
+  "data_version": "0.1.0",
+  "manufacturer": {
+    "name": "Art Gallery Fabrics",
+    "slug": "art-gallery-fabrics",
+    "website": "https://www.artgalleryfabrics.com"
+  },
+  "line": {
+    "name": "Pure Solids",
+    "slug": "pure-solids",
+    "substrate": "cotton",
+    "weight_oz_per_sq_yd": 3.92,
+    "width_inches": 44.0
+  },
+  "notes": "Art Gallery Fabrics' solid cotton line \u2014 Pure Elements (PE) plus the Signature Pure Solids (PES) sub-collection. AGF publishes rendered swatches rather than fabric photographs, so the classifier skips the vision stage and hex is taken straight from the algorithmic LAB median.",
+  "id_scheme": "manufacturer_sku",
+  "generated_on": "2026-04-19",
+  "generator_version": "0.1.0",
+  "color_count": 45,
+  "colors": [
+    {
+      "id": "art-gallery-fabrics-pure-solids-pe-583",
+      "name": "Popsicle",
+      "sku": "PE-583",
+      "aliases": [],
+      "hex": "#FABBA9",
+      "hex_method": "algorithmic",
+      "hex_confidence": "high",
+      "hex_algorithmic": "#FABBA9",
+      "hex_source": {
+        "image_url": "https://liveartgalleryfabrics.com/wp-content/uploads/2025/06/PE-583-Popsicle_500px.jpg",
+        "image_sha256": "6f939247751dbb8f4f2683e48f63195b6aa152f3c1b5453088aba03ab9407cb1"
+      },
+      "manufacturer_product_url": "https://liveartgalleryfabrics.com/pure-solids-quilting-cotton/",
+      "status": "active",
+      "first_seen": "2026-04-19",
+      "source_collected_on": "2026-04-19"
+    },
+    {
+      "id": "art-gallery-fabrics-pure-solids-pe-584",
+      "name": "Silk Ribbon",
+      "sku": "PE-584",
+      "aliases": [],
+      "hex": "#F8B1BF",
+      "hex_method": "algorithmic",
+      "hex_confidence": "high",
+      "hex_algorithmic": "#F8B1BF",
+      "hex_source": {
+        "image_url": "https://liveartgalleryfabrics.com/wp-content/uploads/2025/06/PE-584-Silk-Ribbon_500px.jpg",
+        "image_sha256": "f185d27d3ad20f6998a2cb79250b34d1e844d01feb78e39200cf4b2eb2cb0eac"
+      },
+      "manufacturer_product_url": "https://liveartgalleryfabrics.com/pure-solids-quilting-cotton/",
+      "status": "active",
+      "first_seen": "2026-04-19",
+      "source_collected_on": "2026-04-19"
+    },
+    {
+      "id": "art-gallery-fabrics-pure-solids-pe-585",
+      "name": "Ever So Pink",
+      "sku": "PE-585",
+      "aliases": [],
+      "hex": "#F3E0E4",
+      "hex_method": "algorithmic",
+      "hex_confidence": "high",
+      "hex_algorithmic": "#F3E0E4",
+      "hex_source": {
+        "image_url": "https://liveartgalleryfabrics.com/wp-content/uploads/2025/06/PE-585-Ever-So-Pink_500px.jpg",
+        "image_sha256": "3b2747a2a9408b78603f6d77ef9802f2d1deaac870ae1e0367215a63f336e2fe"
+      },
+      "manufacturer_product_url": "https://liveartgalleryfabrics.com/pure-solids-quilting-cotton/",
+      "status": "active",
+      "first_seen": "2026-04-19",
+      "source_collected_on": "2026-04-19"
+    },
+    {
+      "id": "art-gallery-fabrics-pure-solids-pe-586",
+      "name": "Peony",
+      "sku": "PE-586",
+      "aliases": [],
+      "hex": "#FACFE0",
+      "hex_method": "algorithmic",
+      "hex_confidence": "high",
+      "hex_algorithmic": "#FACFE0",
+      "hex_source": {
+        "image_url": "https://liveartgalleryfabrics.com/wp-content/uploads/2025/06/PE-586-Peony_500px.jpg",
+        "image_sha256": "d1014c0a7fb841853b70d52d3e80a4c9688164219473573fd40f2de379033cb1"
+      },
+      "manufacturer_product_url": "https://liveartgalleryfabrics.com/pure-solids-quilting-cotton/",
+      "status": "active",
+      "first_seen": "2026-04-19",
+      "source_collected_on": "2026-04-19"
+    },
+    {
+      "id": "art-gallery-fabrics-pure-solids-pe-587",
+      "name": "Day Dreamer",
+      "sku": "PE-587",
+      "aliases": [],
+      "hex": "#CCB2D5",
+      "hex_method": "algorithmic",
+      "hex_confidence": "high",
+      "hex_algorithmic": "#CCB2D5",
+      "hex_source": {
+        "image_url": "https://liveartgalleryfabrics.com/wp-content/uploads/2025/06/PE-587-Day-Dreamer_500px.jpg",
+        "image_sha256": "c54e3c44b7cc5779dd427c17687f663345c17f10d42f0dfbe2e3686dec19295d"
+      },
+      "manufacturer_product_url": "https://liveartgalleryfabrics.com/pure-solids-quilting-cotton/",
+      "status": "active",
+      "first_seen": "2026-04-19",
+      "source_collected_on": "2026-04-19"
+    },
+    {
+      "id": "art-gallery-fabrics-pure-solids-pe-588",
+      "name": "Intergalactic",
+      "sku": "PE-588",
+      "aliases": [],
+      "hex": "#9B97B2",
+      "hex_method": "algorithmic",
+      "hex_confidence": "high",
+      "hex_algorithmic": "#9B97B2",
+      "hex_source": {
+        "image_url": "https://liveartgalleryfabrics.com/wp-content/uploads/2025/06/PE-588-Intergalactic_500px.jpg",
+        "image_sha256": "5ba3fe9bfd65b54c1fb6c833aee2377895014f3b69135c1fb53b7bf72f5befa8"
+      },
+      "manufacturer_product_url": "https://liveartgalleryfabrics.com/pure-solids-quilting-cotton/",
+      "status": "active",
+      "first_seen": "2026-04-19",
+      "source_collected_on": "2026-04-19"
+    },
+    {
+      "id": "art-gallery-fabrics-pure-solids-pe-589",
+      "name": "North Star",
+      "sku": "PE-589",
+      "aliases": [],
+      "hex": "#96A8CE",
+      "hex_method": "algorithmic",
+      "hex_confidence": "high",
+      "hex_algorithmic": "#96A8CE",
+      "hex_source": {
+        "image_url": "https://liveartgalleryfabrics.com/wp-content/uploads/2025/06/PE-589-North-Star_500px.jpg",
+        "image_sha256": "49242e64d08a248b1500a84f16718b4562a56986cfc5f60a5e25bc7066268f4e"
+      },
+      "manufacturer_product_url": "https://liveartgalleryfabrics.com/pure-solids-quilting-cotton/",
+      "status": "active",
+      "first_seen": "2026-04-19",
+      "source_collected_on": "2026-04-19"
+    },
+    {
+      "id": "art-gallery-fabrics-pure-solids-pe-590",
+      "name": "Aqua",
+      "sku": "PE-590",
+      "aliases": [],
+      "hex": "#A5D9CD",
+      "hex_method": "algorithmic",
+      "hex_confidence": "high",
+      "hex_algorithmic": "#A5D9CD",
+      "hex_source": {
+        "image_url": "https://liveartgalleryfabrics.com/wp-content/uploads/2025/06/PE-590-Aqua_500px.jpg",
+        "image_sha256": "5bf7bbcdab43ce30be03f4dcf197ffc7e4499a0cb529aab320b1449cbf677231"
+      },
+      "manufacturer_product_url": "https://liveartgalleryfabrics.com/pure-solids-quilting-cotton/",
+      "status": "active",
+      "first_seen": "2026-04-19",
+      "source_collected_on": "2026-04-19"
+    },
+    {
+      "id": "art-gallery-fabrics-pure-solids-pe-591",
+      "name": "Seaglass",
+      "sku": "PE-591",
+      "aliases": [],
+      "hex": "#9CD4B9",
+      "hex_method": "algorithmic",
+      "hex_confidence": "high",
+      "hex_algorithmic": "#9CD4B9",
+      "hex_source": {
+        "image_url": "https://liveartgalleryfabrics.com/wp-content/uploads/2025/06/PE-591-Seaglass_500px.jpg",
+        "image_sha256": "fabbfc2736cc0159565a0193240f00ec34c44e2701a85c1f3f62376ba395d885"
+      },
+      "manufacturer_product_url": "https://liveartgalleryfabrics.com/pure-solids-quilting-cotton/",
+      "status": "active",
+      "first_seen": "2026-04-19",
+      "source_collected_on": "2026-04-19"
+    },
+    {
+      "id": "art-gallery-fabrics-pure-solids-pe-592",
+      "name": "Springtide",
+      "sku": "PE-592",
+      "aliases": [],
+      "hex": "#8BC595",
+      "hex_method": "algorithmic",
+      "hex_confidence": "high",
+      "hex_algorithmic": "#8BC595",
+      "hex_source": {
+        "image_url": "https://liveartgalleryfabrics.com/wp-content/uploads/2025/06/PE-592-Springtide_500px.jpg",
+        "image_sha256": "24dc38bce7b44ca211e671895ff50f0b04c835ef90cf22684710d6d0a5486bdc"
+      },
+      "manufacturer_product_url": "https://liveartgalleryfabrics.com/pure-solids-quilting-cotton/",
+      "status": "active",
+      "first_seen": "2026-04-19",
+      "source_collected_on": "2026-04-19"
+    },
+    {
+      "id": "art-gallery-fabrics-pure-solids-pe-593",
+      "name": "Chamomile",
+      "sku": "PE-593",
+      "aliases": [],
+      "hex": "#EFEBC8",
+      "hex_method": "algorithmic",
+      "hex_confidence": "high",
+      "hex_algorithmic": "#EFEBC8",
+      "hex_source": {
+        "image_url": "https://liveartgalleryfabrics.com/wp-content/uploads/2025/06/PE-593-Chamomile_500px.jpg",
+        "image_sha256": "68bb1e7e5b253bcabdd602cd5834426e8c881116d5a7f46650bccd019542c636"
+      },
+      "manufacturer_product_url": "https://liveartgalleryfabrics.com/pure-solids-quilting-cotton/",
+      "status": "active",
+      "first_seen": "2026-04-19",
+      "source_collected_on": "2026-04-19"
+    },
+    {
+      "id": "art-gallery-fabrics-pure-solids-pe-594",
+      "name": "Storm",
+      "sku": "PE-594",
+      "aliases": [],
+      "hex": "#B4ADA7",
+      "hex_method": "algorithmic",
+      "hex_confidence": "high",
+      "hex_algorithmic": "#B4ADA7",
+      "hex_source": {
+        "image_url": "https://liveartgalleryfabrics.com/wp-content/uploads/2025/06/PE-594-Storm_500px.jpg",
+        "image_sha256": "1a2e1c88a268b3277fb8fa54abee3f4e5a72786dc434dd9adaecb8923acf2c54"
+      },
+      "manufacturer_product_url": "https://liveartgalleryfabrics.com/pure-solids-quilting-cotton/",
+      "status": "active",
+      "first_seen": "2026-04-19",
+      "source_collected_on": "2026-04-19"
+    },
+    {
+      "id": "art-gallery-fabrics-pure-solids-pe570",
+      "name": "Icicle",
+      "sku": "PE570",
+      "aliases": [],
+      "hex": "#D2EEFC",
+      "hex_method": "algorithmic",
+      "hex_confidence": "high",
+      "hex_algorithmic": "#D2EEFC",
+      "hex_source": {
+        "image_url": "https://liveartgalleryfabrics.com/wp-content/uploads/2024/07/PE570-Icicle_500px.jpg",
+        "image_sha256": "e8da37d2e12a2264454e7b525eef44e3d9664b5d848f0696910a0cb645e0d613"
+      },
+      "manufacturer_product_url": "https://liveartgalleryfabrics.com/pure-solids-quilting-cotton/",
+      "status": "active",
+      "first_seen": "2026-04-19",
+      "source_collected_on": "2026-04-19"
+    },
+    {
+      "id": "art-gallery-fabrics-pure-solids-pe571",
+      "name": "Skylit",
+      "sku": "PE571",
+      "aliases": [],
+      "hex": "#89B8D2",
+      "hex_method": "algorithmic",
+      "hex_confidence": "high",
+      "hex_algorithmic": "#89B8D2",
+      "hex_source": {
+        "image_url": "https://liveartgalleryfabrics.com/wp-content/uploads/2024/07/PE571-Skylit_500px.jpg",
+        "image_sha256": "f57527f9ca85a5b6104fe2fbb22a212cec022fde1fe4e5efc53b1d30fe55c1e3"
+      },
+      "manufacturer_product_url": "https://liveartgalleryfabrics.com/pure-solids-quilting-cotton/",
+      "status": "active",
+      "first_seen": "2026-04-19",
+      "source_collected_on": "2026-04-19"
+    },
+    {
+      "id": "art-gallery-fabrics-pure-solids-pe572",
+      "name": "Adrift",
+      "sku": "PE572",
+      "aliases": [],
+      "hex": "#A7BBC2",
+      "hex_method": "algorithmic",
+      "hex_confidence": "high",
+      "hex_algorithmic": "#A7BBC2",
+      "hex_source": {
+        "image_url": "https://liveartgalleryfabrics.com/wp-content/uploads/2024/07/PE572-Adrift_500px.jpg",
+        "image_sha256": "2e831b70227054bdc23e26cd3a3217e765ee541752308e8fce464e247f5539c2"
+      },
+      "manufacturer_product_url": "https://liveartgalleryfabrics.com/pure-solids-quilting-cotton/",
+      "status": "active",
+      "first_seen": "2026-04-19",
+      "source_collected_on": "2026-04-19"
+    },
+    {
+      "id": "art-gallery-fabrics-pure-solids-pe573",
+      "name": "Lakefront",
+      "sku": "PE573",
+      "aliases": [],
+      "hex": "#00414F",
+      "hex_method": "algorithmic",
+      "hex_confidence": "high",
+      "hex_algorithmic": "#00414F",
+      "hex_source": {
+        "image_url": "https://liveartgalleryfabrics.com/wp-content/uploads/2024/07/PE573-Lakefront_500px.jpg",
+        "image_sha256": "2ebd6dbed462b5ee412af09f0c16f82f8f04968ff55e4ae7d4dc92d9b80ed5b5"
+      },
+      "manufacturer_product_url": "https://liveartgalleryfabrics.com/pure-solids-quilting-cotton/",
+      "status": "active",
+      "first_seen": "2026-04-19",
+      "source_collected_on": "2026-04-19"
+    },
+    {
+      "id": "art-gallery-fabrics-pure-solids-pe574",
+      "name": "Rainforest",
+      "sku": "PE574",
+      "aliases": [],
+      "hex": "#007356",
+      "hex_method": "algorithmic",
+      "hex_confidence": "high",
+      "hex_algorithmic": "#007356",
+      "hex_source": {
+        "image_url": "https://liveartgalleryfabrics.com/wp-content/uploads/2024/07/PE574-Rainforest_500px.jpg",
+        "image_sha256": "f67d9dbbf109256ace69fccc48220e78f74acab1803bacbe5941efedc393b842"
+      },
+      "manufacturer_product_url": "https://liveartgalleryfabrics.com/pure-solids-quilting-cotton/",
+      "status": "active",
+      "first_seen": "2026-04-19",
+      "source_collected_on": "2026-04-19"
+    },
+    {
+      "id": "art-gallery-fabrics-pure-solids-pe575",
+      "name": "Mint Glow",
+      "sku": "PE575",
+      "aliases": [],
+      "hex": "#D4E7B9",
+      "hex_method": "algorithmic",
+      "hex_confidence": "high",
+      "hex_algorithmic": "#D4E7B9",
+      "hex_source": {
+        "image_url": "https://liveartgalleryfabrics.com/wp-content/uploads/2024/07/PE575-Mint-Glow_500px.jpg",
+        "image_sha256": "d2c2a4cdba33095d1e8f4c616964f74a8da7fd1c1c7158a842350593e7d7d834"
+      },
+      "manufacturer_product_url": "https://liveartgalleryfabrics.com/pure-solids-quilting-cotton/",
+      "status": "active",
+      "first_seen": "2026-04-19",
+      "source_collected_on": "2026-04-19"
+    },
+    {
+      "id": "art-gallery-fabrics-pure-solids-pe576",
+      "name": "Clover",
+      "sku": "PE576",
+      "aliases": [],
+      "hex": "#40854C",
+      "hex_method": "algorithmic",
+      "hex_confidence": "high",
+      "hex_algorithmic": "#40854C",
+      "hex_source": {
+        "image_url": "https://liveartgalleryfabrics.com/wp-content/uploads/2024/07/PE576-Clover_500px.jpg",
+        "image_sha256": "0feda9fbc1d32b0ee08ef849b555a5b221b66f205577a3440f8c57960f3ce005"
+      },
+      "manufacturer_product_url": "https://liveartgalleryfabrics.com/pure-solids-quilting-cotton/",
+      "status": "active",
+      "first_seen": "2026-04-19",
+      "source_collected_on": "2026-04-19"
+    },
+    {
+      "id": "art-gallery-fabrics-pure-solids-pe577",
+      "name": "Mojito",
+      "sku": "PE577",
+      "aliases": [],
+      "hex": "#D3DBAA",
+      "hex_method": "algorithmic",
+      "hex_confidence": "high",
+      "hex_algorithmic": "#D3DBAA",
+      "hex_source": {
+        "image_url": "https://liveartgalleryfabrics.com/wp-content/uploads/2024/07/PE577-Mojito_500px.jpg",
+        "image_sha256": "67e81eeae71571d7d51f5a856356e2fe91483099b35f31a8ae055c5115346f71"
+      },
+      "manufacturer_product_url": "https://liveartgalleryfabrics.com/pure-solids-quilting-cotton/",
+      "status": "active",
+      "first_seen": "2026-04-19",
+      "source_collected_on": "2026-04-19"
+    },
+    {
+      "id": "art-gallery-fabrics-pure-solids-pe578",
+      "name": "Electric Lime",
+      "sku": "PE578",
+      "aliases": [],
+      "hex": "#CEDB29",
+      "hex_method": "algorithmic",
+      "hex_confidence": "high",
+      "hex_algorithmic": "#CEDB29",
+      "hex_source": {
+        "image_url": "https://liveartgalleryfabrics.com/wp-content/uploads/2024/07/PE578-Electric-Lime_500px.jpg",
+        "image_sha256": "1e04b27d96095d21fc909be6fe6bac985fd08cc89dbba0e6605f832d0c69b511"
+      },
+      "manufacturer_product_url": "https://liveartgalleryfabrics.com/pure-solids-quilting-cotton/",
+      "status": "active",
+      "first_seen": "2026-04-19",
+      "source_collected_on": "2026-04-19"
+    },
+    {
+      "id": "art-gallery-fabrics-pure-solids-pe579",
+      "name": "Solar",
+      "sku": "PE579",
+      "aliases": [],
+      "hex": "#F8E13D",
+      "hex_method": "algorithmic",
+      "hex_confidence": "high",
+      "hex_algorithmic": "#F8E13D",
+      "hex_source": {
+        "image_url": "https://liveartgalleryfabrics.com/wp-content/uploads/2024/07/PE579-Solar_500px.jpg",
+        "image_sha256": "e449982bda29be0b635b7ba732f53dd5f088f4ec33e4daca3f3423611cb5abc4"
+      },
+      "manufacturer_product_url": "https://liveartgalleryfabrics.com/pure-solids-quilting-cotton/",
+      "status": "active",
+      "first_seen": "2026-04-19",
+      "source_collected_on": "2026-04-19"
+    },
+    {
+      "id": "art-gallery-fabrics-pure-solids-pe580",
+      "name": "Buttermilk",
+      "sku": "PE580",
+      "aliases": [],
+      "hex": "#F7E7B3",
+      "hex_method": "algorithmic",
+      "hex_confidence": "high",
+      "hex_algorithmic": "#F7E7B3",
+      "hex_source": {
+        "image_url": "https://liveartgalleryfabrics.com/wp-content/uploads/2024/07/PE580-Buttermilk_500px.jpg",
+        "image_sha256": "d8cdf64cc72b963c40f6ccb95c03dc7f6d7562dee4f66a5b0685c5865d4d7888"
+      },
+      "manufacturer_product_url": "https://liveartgalleryfabrics.com/pure-solids-quilting-cotton/",
+      "status": "active",
+      "first_seen": "2026-04-19",
+      "source_collected_on": "2026-04-19"
+    },
+    {
+      "id": "art-gallery-fabrics-pure-solids-pe581",
+      "name": "Nutmeg",
+      "sku": "PE581",
+      "aliases": [],
+      "hex": "#7F6858",
+      "hex_method": "algorithmic",
+      "hex_confidence": "high",
+      "hex_algorithmic": "#7F6858",
+      "hex_source": {
+        "image_url": "https://liveartgalleryfabrics.com/wp-content/uploads/2024/07/PE581-Nutmeg_500px.jpg",
+        "image_sha256": "ce2c30923d1077c91e977bcc4984f089b79f214b53dca4b5b6f588265d92d122"
+      },
+      "manufacturer_product_url": "https://liveartgalleryfabrics.com/pure-solids-quilting-cotton/",
+      "status": "active",
+      "first_seen": "2026-04-19",
+      "source_collected_on": "2026-04-19"
+    },
+    {
+      "id": "art-gallery-fabrics-pure-solids-pe582",
+      "name": "Porcelain",
+      "sku": "PE582",
+      "aliases": [],
+      "hex": "#F5F5F5",
+      "hex_method": "algorithmic",
+      "hex_confidence": "high",
+      "hex_algorithmic": "#F5F5F5",
+      "hex_source": {
+        "image_url": "https://liveartgalleryfabrics.com/wp-content/uploads/2024/07/PE582-Porcelain_500px.jpg",
+        "image_sha256": "36f04f6997f2a562bbc477a89362f030761e4e6b665597312a72570307557b2e"
+      },
+      "manufacturer_product_url": "https://liveartgalleryfabrics.com/pure-solids-quilting-cotton/",
+      "status": "active",
+      "first_seen": "2026-04-19",
+      "source_collected_on": "2026-04-19"
+    },
+    {
+      "id": "art-gallery-fabrics-pure-solids-pes900",
+      "name": "Monet",
+      "sku": "PES900",
+      "aliases": [],
+      "hex": "#D0B9B3",
+      "hex_method": "algorithmic",
+      "hex_confidence": "high",
+      "hex_algorithmic": "#D0B9B3",
+      "hex_source": {
+        "image_url": "https://liveartgalleryfabrics.com/wp-content/uploads/2023/04/PES900-Monet.jpg",
+        "image_sha256": "1187a0cee2695729c33733054676fa1318b15e44b43350a080a9c25640a79ee7"
+      },
+      "manufacturer_product_url": "https://liveartgalleryfabrics.com/pure-solids-quilting-cotton/",
+      "status": "active",
+      "first_seen": "2026-04-19",
+      "source_collected_on": "2026-04-19"
+    },
+    {
+      "id": "art-gallery-fabrics-pure-solids-pes901",
+      "name": "Haze",
+      "sku": "PES901",
+      "aliases": [],
+      "hex": "#72575E",
+      "hex_method": "algorithmic",
+      "hex_confidence": "high",
+      "hex_algorithmic": "#72575E",
+      "hex_source": {
+        "image_url": "https://liveartgalleryfabrics.com/wp-content/uploads/2023/04/PES901-Haze.jpg",
+        "image_sha256": "5d6a281c22b5b8623723a933966c5f7f181b6172b5e7d8b1dfced1e72c4e5ede"
+      },
+      "manufacturer_product_url": "https://liveartgalleryfabrics.com/pure-solids-quilting-cotton/",
+      "status": "active",
+      "first_seen": "2026-04-19",
+      "source_collected_on": "2026-04-19"
+    },
+    {
+      "id": "art-gallery-fabrics-pure-solids-pes902",
+      "name": "Velvet",
+      "sku": "PES902",
+      "aliases": [],
+      "hex": "#46222C",
+      "hex_method": "algorithmic",
+      "hex_confidence": "high",
+      "hex_algorithmic": "#46222C",
+      "hex_source": {
+        "image_url": "https://liveartgalleryfabrics.com/wp-content/uploads/2023/04/PES902-Velvet.jpg",
+        "image_sha256": "36bdaa66b58b688d9a5e011e2c204906d93b75b454c1f1281d896b6f996d5a36"
+      },
+      "manufacturer_product_url": "https://liveartgalleryfabrics.com/pure-solids-quilting-cotton/",
+      "status": "active",
+      "first_seen": "2026-04-19",
+      "source_collected_on": "2026-04-19"
+    },
+    {
+      "id": "art-gallery-fabrics-pure-solids-pes903",
+      "name": "Thistle",
+      "sku": "PES903",
+      "aliases": [],
+      "hex": "#855E57",
+      "hex_method": "algorithmic",
+      "hex_confidence": "high",
+      "hex_algorithmic": "#855E57",
+      "hex_source": {
+        "image_url": "https://liveartgalleryfabrics.com/wp-content/uploads/2023/04/PES903-Thistle.jpg",
+        "image_sha256": "2c748dc0f492b75c29d9703c43f8a8a995babc3716197d3dbe8986b0ba05a930"
+      },
+      "manufacturer_product_url": "https://liveartgalleryfabrics.com/pure-solids-quilting-cotton/",
+      "status": "active",
+      "first_seen": "2026-04-19",
+      "source_collected_on": "2026-04-19"
+    },
+    {
+      "id": "art-gallery-fabrics-pure-solids-pes904",
+      "name": "Poppy",
+      "sku": "PES904",
+      "aliases": [],
+      "hex": "#A14E30",
+      "hex_method": "algorithmic",
+      "hex_confidence": "high",
+      "hex_algorithmic": "#A14E30",
+      "hex_source": {
+        "image_url": "https://liveartgalleryfabrics.com/wp-content/uploads/2023/04/PES904-Poppy.jpg",
+        "image_sha256": "78acceafcb1446f450930c6c00636f8ffc5daa3a8b93149f209f6ade3c58f87d"
+      },
+      "manufacturer_product_url": "https://liveartgalleryfabrics.com/pure-solids-quilting-cotton/",
+      "status": "active",
+      "first_seen": "2026-04-19",
+      "source_collected_on": "2026-04-19"
+    },
+    {
+      "id": "art-gallery-fabrics-pure-solids-pes905",
+      "name": "Spiced",
+      "sku": "PES905",
+      "aliases": [],
+      "hex": "#B96D39",
+      "hex_method": "algorithmic",
+      "hex_confidence": "high",
+      "hex_algorithmic": "#B96D39",
+      "hex_source": {
+        "image_url": "https://liveartgalleryfabrics.com/wp-content/uploads/2023/04/PES905-Spiced.jpg",
+        "image_sha256": "c202f39230d131c25cd85d84483302590461a85ad7f0c7f180eadf7fab6dfad8"
+      },
+      "manufacturer_product_url": "https://liveartgalleryfabrics.com/pure-solids-quilting-cotton/",
+      "status": "active",
+      "first_seen": "2026-04-19",
+      "source_collected_on": "2026-04-19"
+    },
+    {
+      "id": "art-gallery-fabrics-pure-solids-pes906",
+      "name": "Queen Bee",
+      "sku": "PES906",
+      "aliases": [],
+      "hex": "#B47B38",
+      "hex_method": "algorithmic",
+      "hex_confidence": "high",
+      "hex_algorithmic": "#B47B38",
+      "hex_source": {
+        "image_url": "https://liveartgalleryfabrics.com/wp-content/uploads/2023/04/PES906-Queen-Bee.jpg",
+        "image_sha256": "e9321d33240a057465c942f581652930a610f3d982dcb7feeb47ecc107a00fc3"
+      },
+      "manufacturer_product_url": "https://liveartgalleryfabrics.com/pure-solids-quilting-cotton/",
+      "status": "active",
+      "first_seen": "2026-04-19",
+      "source_collected_on": "2026-04-19"
+    },
+    {
+      "id": "art-gallery-fabrics-pure-solids-pes907",
+      "name": "Shrimpy",
+      "sku": "PES907",
+      "aliases": [],
+      "hex": "#F8B892",
+      "hex_method": "algorithmic",
+      "hex_confidence": "high",
+      "hex_algorithmic": "#F8B892",
+      "hex_source": {
+        "image_url": "https://liveartgalleryfabrics.com/wp-content/uploads/2023/04/PES907-Shrimpy.jpg",
+        "image_sha256": "aef9c9b924d32497d1e8c85718fb233d8929327f42503772f2dd05bb146fe372"
+      },
+      "manufacturer_product_url": "https://liveartgalleryfabrics.com/pure-solids-quilting-cotton/",
+      "status": "active",
+      "first_seen": "2026-04-19",
+      "source_collected_on": "2026-04-19"
+    },
+    {
+      "id": "art-gallery-fabrics-pure-solids-pes908",
+      "name": "Snapdragon",
+      "sku": "PES908",
+      "aliases": [],
+      "hex": "#C98369",
+      "hex_method": "algorithmic",
+      "hex_confidence": "high",
+      "hex_algorithmic": "#C98369",
+      "hex_source": {
+        "image_url": "https://liveartgalleryfabrics.com/wp-content/uploads/2023/04/PES908-Snapdragon.jpg",
+        "image_sha256": "a1de78b54263901bb773ad4de4d0b668a145ed05e0750e746b80e8cac9ba7fa7"
+      },
+      "manufacturer_product_url": "https://liveartgalleryfabrics.com/pure-solids-quilting-cotton/",
+      "status": "active",
+      "first_seen": "2026-04-19",
+      "source_collected_on": "2026-04-19"
+    },
+    {
+      "id": "art-gallery-fabrics-pure-solids-pes909",
+      "name": "Ginger",
+      "sku": "PES909",
+      "aliases": [],
+      "hex": "#D3AF8B",
+      "hex_method": "algorithmic",
+      "hex_confidence": "high",
+      "hex_algorithmic": "#D3AF8B",
+      "hex_source": {
+        "image_url": "https://liveartgalleryfabrics.com/wp-content/uploads/2023/04/PES909-Ginger.jpg",
+        "image_sha256": "3e7d5a18b265ea931eff330cb5a4e3c63e1f254833c87dc58a7b4f9d0cbd0c93"
+      },
+      "manufacturer_product_url": "https://liveartgalleryfabrics.com/pure-solids-quilting-cotton/",
+      "status": "active",
+      "first_seen": "2026-04-19",
+      "source_collected_on": "2026-04-19"
+    },
+    {
+      "id": "art-gallery-fabrics-pure-solids-pes910",
+      "name": "Nova",
+      "sku": "PES910",
+      "aliases": [],
+      "hex": "#1B2A31",
+      "hex_method": "algorithmic",
+      "hex_confidence": "high",
+      "hex_algorithmic": "#1B2A31",
+      "hex_source": {
+        "image_url": "https://liveartgalleryfabrics.com/wp-content/uploads/2023/04/PES910-Nova.jpg",
+        "image_sha256": "6e0d4ea40abe653417237c58c49391bfe37ab7cff240978fab7ab9050ff228ec"
+      },
+      "manufacturer_product_url": "https://liveartgalleryfabrics.com/pure-solids-quilting-cotton/",
+      "status": "active",
+      "first_seen": "2026-04-19",
+      "source_collected_on": "2026-04-19"
+    },
+    {
+      "id": "art-gallery-fabrics-pure-solids-pes911",
+      "name": "Honeymoon",
+      "sku": "PES911",
+      "aliases": [],
+      "hex": "#395F6A",
+      "hex_method": "algorithmic",
+      "hex_confidence": "high",
+      "hex_algorithmic": "#395F6A",
+      "hex_source": {
+        "image_url": "https://liveartgalleryfabrics.com/wp-content/uploads/2023/04/PES911-Honeymoon.jpg",
+        "image_sha256": "2cd036d42cc445368f09d8ec0585639495c2ed8885359ba6610a7021830be8e4"
+      },
+      "manufacturer_product_url": "https://liveartgalleryfabrics.com/pure-solids-quilting-cotton/",
+      "status": "active",
+      "first_seen": "2026-04-19",
+      "source_collected_on": "2026-04-19"
+    },
+    {
+      "id": "art-gallery-fabrics-pure-solids-pes912",
+      "name": "Cerulean",
+      "sku": "PES912",
+      "aliases": [],
+      "hex": "#89A5B1",
+      "hex_method": "algorithmic",
+      "hex_confidence": "high",
+      "hex_algorithmic": "#89A5B1",
+      "hex_source": {
+        "image_url": "https://liveartgalleryfabrics.com/wp-content/uploads/2023/04/PES912-Cerulean.jpg",
+        "image_sha256": "d134e1584ff327f4f3dcc18b2d80cd78cd8b391bcb594d24a6c6f2dfed71e2cb"
+      },
+      "manufacturer_product_url": "https://liveartgalleryfabrics.com/pure-solids-quilting-cotton/",
+      "status": "active",
+      "first_seen": "2026-04-19",
+      "source_collected_on": "2026-04-19"
+    },
+    {
+      "id": "art-gallery-fabrics-pure-solids-pes913",
+      "name": "Glacier",
+      "sku": "PES913",
+      "aliases": [],
+      "hex": "#A4B5AD",
+      "hex_method": "algorithmic",
+      "hex_confidence": "high",
+      "hex_algorithmic": "#A4B5AD",
+      "hex_source": {
+        "image_url": "https://liveartgalleryfabrics.com/wp-content/uploads/2023/04/PES913-Glacier.jpg",
+        "image_sha256": "ce36dc22aa2ab479b73d6e121f49eb01036aa9bc3435bec448d62b3784795926"
+      },
+      "manufacturer_product_url": "https://liveartgalleryfabrics.com/pure-solids-quilting-cotton/",
+      "status": "active",
+      "first_seen": "2026-04-19",
+      "source_collected_on": "2026-04-19"
+    },
+    {
+      "id": "art-gallery-fabrics-pure-solids-pes914",
+      "name": "Pistachio",
+      "sku": "PES914",
+      "aliases": [],
+      "hex": "#ADB896",
+      "hex_method": "algorithmic",
+      "hex_confidence": "high",
+      "hex_algorithmic": "#ADB896",
+      "hex_source": {
+        "image_url": "https://liveartgalleryfabrics.com/wp-content/uploads/2023/04/PES914-Pistachio.jpg",
+        "image_sha256": "2c146c318286da9695c08103dc94629156851bd3351f553e7a138d3eca0db836"
+      },
+      "manufacturer_product_url": "https://liveartgalleryfabrics.com/pure-solids-quilting-cotton/",
+      "status": "active",
+      "first_seen": "2026-04-19",
+      "source_collected_on": "2026-04-19"
+    },
+    {
+      "id": "art-gallery-fabrics-pure-solids-pes915",
+      "name": "Matcha",
+      "sku": "PES915",
+      "aliases": [],
+      "hex": "#7E9164",
+      "hex_method": "algorithmic",
+      "hex_confidence": "high",
+      "hex_algorithmic": "#7E9164",
+      "hex_source": {
+        "image_url": "https://liveartgalleryfabrics.com/wp-content/uploads/2023/04/PES915-Matcha.jpg",
+        "image_sha256": "958806e6f104ca785666fdb4ada715d0672ec92d32c8b24e7b3d83b021c05089"
+      },
+      "manufacturer_product_url": "https://liveartgalleryfabrics.com/pure-solids-quilting-cotton/",
+      "status": "active",
+      "first_seen": "2026-04-19",
+      "source_collected_on": "2026-04-19"
+    },
+    {
+      "id": "art-gallery-fabrics-pure-solids-pes916",
+      "name": "Hemlock",
+      "sku": "PES916",
+      "aliases": [],
+      "hex": "#49695C",
+      "hex_method": "algorithmic",
+      "hex_confidence": "high",
+      "hex_algorithmic": "#49695C",
+      "hex_source": {
+        "image_url": "https://liveartgalleryfabrics.com/wp-content/uploads/2023/04/PES916-Hemlock.jpg",
+        "image_sha256": "e2ac459fc9d8adcba470322c657df28c25b686538cd93e0fa516853a491b6a78"
+      },
+      "manufacturer_product_url": "https://liveartgalleryfabrics.com/pure-solids-quilting-cotton/",
+      "status": "active",
+      "first_seen": "2026-04-19",
+      "source_collected_on": "2026-04-19"
+    },
+    {
+      "id": "art-gallery-fabrics-pure-solids-pes917",
+      "name": "Pearl",
+      "sku": "PES917",
+      "aliases": [],
+      "hex": "#ECDBBF",
+      "hex_method": "algorithmic",
+      "hex_confidence": "high",
+      "hex_algorithmic": "#ECDBBF",
+      "hex_source": {
+        "image_url": "https://liveartgalleryfabrics.com/wp-content/uploads/2023/04/PES917-Pearl.jpg",
+        "image_sha256": "5522a259cc38f6a511768a407b62145f8d1e344ca61cd511205f0ea24555c985"
+      },
+      "manufacturer_product_url": "https://liveartgalleryfabrics.com/pure-solids-quilting-cotton/",
+      "status": "active",
+      "first_seen": "2026-04-19",
+      "source_collected_on": "2026-04-19"
+    },
+    {
+      "id": "art-gallery-fabrics-pure-solids-pes918",
+      "name": "Driftwood",
+      "sku": "PES918",
+      "aliases": [],
+      "hex": "#5B4C49",
+      "hex_method": "algorithmic",
+      "hex_confidence": "high",
+      "hex_algorithmic": "#5B4C49",
+      "hex_source": {
+        "image_url": "https://liveartgalleryfabrics.com/wp-content/uploads/2023/04/PES918-Driftwood.jpg",
+        "image_sha256": "309af8bae7aba25391dd67eafdc8e8528af497b6a733e601c579b087ddc9695d"
+      },
+      "manufacturer_product_url": "https://liveartgalleryfabrics.com/pure-solids-quilting-cotton/",
+      "status": "active",
+      "first_seen": "2026-04-19",
+      "source_collected_on": "2026-04-19"
+    },
+    {
+      "id": "art-gallery-fabrics-pure-solids-pes919",
+      "name": "Truffle",
+      "sku": "PES919",
+      "aliases": [],
+      "hex": "#251F1F",
+      "hex_method": "algorithmic",
+      "hex_confidence": "high",
+      "hex_algorithmic": "#251F1F",
+      "hex_source": {
+        "image_url": "https://liveartgalleryfabrics.com/wp-content/uploads/2023/04/PES919-Truffle.jpg",
+        "image_sha256": "40d4e71b67101cdca41247f6c11910328e567b689e746ddc006a219c67fba808"
+      },
+      "manufacturer_product_url": "https://liveartgalleryfabrics.com/pure-solids-quilting-cotton/",
+      "status": "active",
+      "first_seen": "2026-04-19",
+      "source_collected_on": "2026-04-19"
+    }
+  ]
+}

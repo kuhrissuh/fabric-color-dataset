@@ -106,12 +106,21 @@ def _cmd_run(
 
     extractions = extract_mod.extract(parsed)
     for ex in extractions:
-        print(
-            f"  extract: {ex.parsed.sku} {ex.parsed.name!r} "
-            f"vision={ex.vision.hex} algo={ex.algorithmic.hex} "
-            f"ΔE={ex.delta_e:.2f} -> {ex.final_hex} "
-            f"[{ex.final_method}, {ex.final_confidence}]"
-        )
+        if ex.vision is None:
+            print(
+                f"  extract: {ex.parsed.sku} {ex.parsed.name!r} "
+                f"[{ex.classification}] algo={ex.algorithmic.hex} "
+                f"-> {ex.final_hex} "
+                f"[{ex.final_method}, {ex.final_confidence}]"
+            )
+        else:
+            print(
+                f"  extract: {ex.parsed.sku} {ex.parsed.name!r} "
+                f"[{ex.classification}] vision={ex.vision.hex} "
+                f"algo={ex.algorithmic.hex} ΔE={ex.delta_e:.2f} "
+                f"-> {ex.final_hex} "
+                f"[{ex.final_method}, {ex.final_confidence}]"
+            )
 
     prior_version = write_mod.load_prior_data_version(cfg)
     prior_colors_by_id = _load_prior_colors_by_id(write_mod.data_path(cfg))
