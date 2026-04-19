@@ -36,6 +36,6 @@ def load(line_path: str) -> LineConfig:
         id_scheme=raw["id_scheme"],
         scraper=raw["scraper"],
         product_url_template=templates["product"],
-        image_url_template=templates["image"],
+        image_url_template=templates.get("image"),
         skus=list(raw["skus"]),
     )

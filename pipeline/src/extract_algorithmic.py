@@ -19,5 +19,9 @@ def extract(preprocessed_rgb: np.ndarray) -> AlgorithmicResult:
     flat = lab.reshape(-1, 3)
     median = np.median(flat, axis=0)
     hex_value = image_utils.rgb_to_hex(image_utils.lab_to_rgb(median))
-    std_dev = float(np.std(flat[:, 0]))  # L-channel spread = uniformity proxy
-    return AlgorithmicResult(hex=hex_value, std_dev=std_dev)
+    std_l = float(np.std(flat[:, 0]))  # L-channel spread = uniformity proxy
+    std_a = float(np.std(flat[:, 1]))
+    std_b = float(np.std(flat[:, 2]))
+    return AlgorithmicResult(
+        hex=hex_value, std_dev=std_l, std_a=std_a, std_b=std_b
+    )

@@ -1,0 +1,30 @@
+manufacturer:
+  name: Art Gallery Fabrics
+  slug: art-gallery-fabrics
+  website: https://www.artgalleryfabrics.com
+
+line:
+  name: Pure Solids
+  slug: pure-solids
+  substrate: cotton
+  weight_oz_per_sq_yd: 3.92
+  width_inches: 44
+
+notes: >-
+  Art Gallery Fabrics' solid cotton line — Pure Elements (PE) plus the
+  Signature Pure Solids (PES) sub-collection. AGF publishes rendered
+  swatches rather than fabric photographs, so the classifier skips the
+  vision stage and hex is taken straight from the algorithmic LAB median.
+
+id_scheme: manufacturer_sku
+
+scraper: art_gallery_fabrics
+
+# AGF lists every Pure Solids color on a single catalog page with no per-SKU
+# product URLs, so discover scrapes this page live and derives the full SKU
+# list from it. The image template is omitted — each SKU's image URL is
+# discovered (upload year/month and name-in-path both vary).
+url_templates:
+  product: "https://liveartgalleryfabrics.com/pure-solids-quilting-cotton/"
+
+skus: []
