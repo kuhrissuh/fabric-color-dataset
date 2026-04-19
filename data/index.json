@@ -1,0 +1,24 @@
+{
+  "schema_version": "1.0.0",
+  "generated_on": "2026-04-19",
+  "lines": [
+    {
+      "manufacturer_slug": "art-gallery-fabrics",
+      "line_slug": "pure-solids",
+      "path": "art-gallery-fabrics/pure-solids.json",
+      "manufacturer_name": "Art Gallery Fabrics",
+      "line_name": "Pure Solids",
+      "color_count": 215,
+      "data_version": "0.2.0"
+    },
+    {
+      "manufacturer_slug": "robert-kaufman",
+      "line_slug": "kona-cotton",
+      "path": "robert-kaufman/kona-cotton.json",
+      "manufacturer_name": "Robert Kaufman",
+      "line_name": "Kona Cotton",
+      "color_count": 370,
+      "data_version": "0.2.0"
+    }
+  ]
+}
