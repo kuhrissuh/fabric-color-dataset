@@ -96,12 +96,17 @@ def _cmd_run(
         print(f"  parse: {item.sku} -> {item.name!r}")
 
     if skip_vision:
-        print("skip-vision: computing algorithmic hex only, no data file written")
+        print("skip-vision: computing algorithmic hex + routing, no data file written")
+        vision_count = 0
         for item in parsed:
             rgb = image_utils.load_and_preprocess(item.image_path)
             algo = extract_algorithmic.extract(rgb)
+            classification = extract_mod._classify(algo, rgb)
+            if classification == "photograph":
+                vision_count += 1
             print(f"  algo: {item.sku} {item.name!r} -> "
-                  f"{algo.hex} (std_dev={algo.std_dev:.2f})")
+                  f"{algo.hex} (std_dev={algo.std_dev:.2f}) [{classification}]")
+        print(f"skip-vision: {vision_count}/{len(parsed)} images would route to vision")
         return 0
 
     extractions = extract_mod.extract(parsed)
