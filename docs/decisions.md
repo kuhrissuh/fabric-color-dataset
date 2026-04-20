@@ -4,7 +4,19 @@ Chronological record of design and architecture decisions for the fabric-color-d
 
 ---
 
-## 2026-04-17 — Robert Kaufman Kona Cotton as v0.1 target
+## 2026-04-20 — Low-confidence colors are spot-checked but never overridden
+
+**Status:** accepted
+
+Low-confidence colors (ΔE ≥ 7) get a manual visual spot-check to catch gross extraction failures — cases where the displayed swatch is clearly the wrong hue (e.g. green rendering where the fabric is purple). If the pipeline value is in the right ballpark, it is left as-is.
+
+The alternative — overriding low-confidence values with manually corrected hex — was deliberately rejected. Manual overrides would make the dataset non-reproducible: a future pipeline run would disagree with the stored value, creating noise and requiring ongoing human maintenance. Leaving the pipeline value in place means every run produces the same output from the same inputs. The `low` confidence flag is the signal to consumers that the value may be approximate; it is not an invitation to patch it.
+
+Consequence: low-confidence colors carry a known approximation error, but the dataset remains fully pipeline-reproducible. Manual overrides (`hex_method: "manual_override"`) are reserved for cases where the pipeline value is categorically wrong, not merely imprecise.
+
+---
+
+
 
 **Status:** accepted
 
