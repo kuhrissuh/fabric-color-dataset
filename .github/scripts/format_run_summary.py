@@ -1,4 +1,4 @@
-"""Render a pipeline run summary JSON as the weekly-update PR body
+"""Render a pipeline run summary JSON as the monthly-update PR body
 (and the workflow job step summary on the same markdown).
 
 Usage:
@@ -19,7 +19,7 @@ def render(summary: dict, run_date: str) -> str:
     new = summary.get("new_data_version")
     counts = summary.get("counts", {})
 
-    lines: list[str] = [f"## Weekly update — {run_date}", ""]
+    lines: list[str] = [f"## Monthly update — {run_date}", ""]
     lines.append(f"Line: `{line}`")
 
     if halt:
@@ -29,6 +29,14 @@ def render(summary: dict, run_date: str) -> str:
         lines.append(f"> {halt}")
         lines.append("")
         lines.append("Pipeline stopped before writing. Manual investigation required.")
+        fetch_failures = summary.get("fetch_failures") or []
+        if fetch_failures:
+            lines.append("")
+            lines.append("### Fetch failures")
+            for ff in fetch_failures:
+                lines.append(
+                    f"- `{ff['sku']}` ({ff['kind']}): {ff['url']} — {ff['error']}"
+                )
         return "\n".join(lines) + "\n"
 
     version_line = f"data_version: `{prior}`"
@@ -42,6 +50,7 @@ def render(summary: dict, run_date: str) -> str:
     lines.append(f"- Discontinued: {counts.get('discontinued', 0)}")
     lines.append(f"- Hex updated: {counts.get('hex_changed', 0)}")
     lines.append(f"- Low-confidence: {counts.get('low_confidence', 0)}")
+    lines.append(f"- Fetch failures: {counts.get('fetch_failures', 0)}")
     lines.append("")
 
     added = summary.get("added") or []
@@ -83,6 +92,20 @@ def render(summary: dict, run_date: str) -> str:
     else:
         lines.append("None this run.")
     lines.append("")
+
+    fetch_failures = summary.get("fetch_failures") or []
+    if fetch_failures:
+        lines.append("### Fetch failures")
+        lines.append(
+            "These SKUs were skipped after exhausting retries. "
+            "Prior records carry forward unchanged."
+        )
+        lines.append("")
+        for ff in fetch_failures:
+            lines.append(
+                f"- `{ff['sku']}` ({ff['kind']}): {ff['url']} — {ff['error']}"
+            )
+        lines.append("")
 
     lines.append("### Validation")
     lines.append("All checks passed.")

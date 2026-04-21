@@ -1,14 +1,13 @@
 # Requires repo secret ANTHROPIC_API_KEY (Claude vision extraction).
 # Uses the default GITHUB_TOKEN for commit + PR — no PAT needed.
-name: Weekly data update
+name: Monthly data update
 
 on:
-  # Cron paused while we rethink the weekly-from-GHA model — fetches from
-  # GitHub runner IPs hit intermittent 403/404s on robertkaufman.com and
-  # fetch.py does not yet implement per-item resilience. See issue #9.
-  # Re-enable the schedule once that's settled.
-  # schedule:
-  #   - cron: '0 4 * * 1'
+  schedule:
+    # 4am UTC on the 1st of each month. Fabric manufacturers publish new
+    # lines seasonally, not weekly — monthly is the first cadence with a
+    # meaningfully-above-zero probability of a material change per run.
+    - cron: '0 4 1 * *'
   workflow_dispatch: {}
 
 permissions:
@@ -16,7 +15,7 @@ permissions:
   pull-requests: write
 
 concurrency:
-  group: weekly-update
+  group: monthly-update
   cancel-in-progress: false
 
 jobs:
@@ -93,7 +92,7 @@ jobs:
           # Pipeline always rewrites the JSON to update generated_on; when
           # nothing material changed, the resulting diff is noise.
           git restore data raw || true
-          echo "No material changes this week. Skipping PR."
+          echo "No material changes this month. Skipping PR."
 
       - name: Configure git author
         if: steps.check_changed.outputs.value == 'true'
@@ -105,10 +104,10 @@ jobs:
         if: steps.check_changed.outputs.value == 'true'
         id: commit
         run: |
-          BRANCH="weekly-update/${{ steps.date.outputs.value }}"
+          BRANCH="monthly-update/${{ steps.date.outputs.value }}"
           git checkout -b "$BRANCH"
           git add data raw
-          git commit -m "Weekly update — ${{ steps.date.outputs.value }}"
+          git commit -m "Monthly update — ${{ steps.date.outputs.value }}"
           git push -u origin "$BRANCH"
           echo "branch=$BRANCH" >> "$GITHUB_OUTPUT"
 
@@ -123,5 +122,5 @@ jobs:
           gh pr create \
             --base main \
             --head "${{ steps.commit.outputs.branch }}" \
-            --title "Weekly update — ${{ steps.date.outputs.value }}" \
+            --title "Monthly update — ${{ steps.date.outputs.value }}" \
             --body-file pr_body.md

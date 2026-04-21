@@ -87,7 +87,7 @@ No prompt changes; proceed to the full 370-color run.
 ### Known non-prompt issue: low-confidence rate
 
 Calibration produced a 2/12 = 16.7% low-confidence rate, above the 10%
-halt threshold defined for weekly runs. This is a calibration artifact,
+halt threshold defined for monthly runs. This is a calibration artifact,
 not a production signal — the halt threshold is designed for run-to-run
 drift detection against existing data. A first-run against an empty
 dataset has no baseline to compare to, and in this case both low-confidence

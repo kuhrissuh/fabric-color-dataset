@@ -12,7 +12,7 @@ pipeline without an Anthropic API key.
 
 --summary-json writes a machine-readable summary of the run (counts,
 changed IDs, before/after hex values, halt flag) to the given path.
-Consumed by the weekly-update GitHub Actions workflow.
+Consumed by the monthly-update GitHub Actions workflow.
 """
 
 from __future__ import annotations
@@ -38,12 +38,17 @@ import merge as merge_mod  # noqa: E402
 import parse as parse_mod  # noqa: E402
 import validate as validate_mod  # noqa: E402
 import write as write_mod  # noqa: E402
+from models import LineDiff  # noqa: E402
 
 # Halt thresholds per docs/project-plan.md. Denominator is the count of
 # colors actually processed this run (the extraction set), not the full
 # record set (which may include carry-overs from prior runs).
 HEX_CHANGE_HALT_RATE = 0.20
 LOW_CONFIDENCE_HALT_RATE = 0.10
+# Fetch-failure halt: if too many URLs fail after retries, the run is
+# fundamentally incomplete. Without this, a systematic block would show
+# as "0 material changes" and silently succeed.
+FETCH_FAILURE_HALT_RATE = 0.25
 
 
 def main(argv: list[str]) -> int:
@@ -88,8 +93,32 @@ def _cmd_run(
     discovered = discover_mod.discover(cfg)
     print(f"discover: {len(discovered)} URL(s)")
 
-    fetched = fetch_mod.fetch(cfg, discovered)
+    fetch_result = fetch_mod.fetch(cfg, discovered)
+    fetched = fetch_result.fetched
+    fetch_failures = fetch_result.failures
     print(f"fetch: {len(fetched)} page(s) + image(s) downloaded")
+    if fetch_failures:
+        print(f"fetch: {len(fetch_failures)} SKU(s) skipped after retries")
+        for f in fetch_failures:
+            print(f"  - {f.sku} ({f.kind}): {f.error}")
+
+    fetch_halt = _check_fetch_halt(fetch_failures, discovered_count=len(discovered))
+    if fetch_halt is not None:
+        print(f"HALT: {fetch_halt}", file=sys.stderr)
+        prior_version = write_mod.load_prior_data_version(cfg)
+        if summary_path:
+            _write_summary(
+                Path(summary_path),
+                line_path=line_path,
+                prior_version=prior_version,
+                new_version=None,
+                diff=LineDiff(),
+                records=[],
+                prior_colors_by_id={},
+                halt_reason=fetch_halt,
+                fetch_failures=fetch_failures,
+            )
+        return 2
 
     parsed = parse_mod.parse(fetched, cfg)
     for item in parsed:
@@ -141,6 +170,7 @@ def _cmd_run(
                 records=records,
                 prior_colors_by_id=prior_colors_by_id,
                 halt_reason=halt_reason,
+                fetch_failures=fetch_failures,
             )
         return 2
 
@@ -168,8 +198,24 @@ def _cmd_run(
             records=records,
             prior_colors_by_id=prior_colors_by_id,
             halt_reason=None,
+            fetch_failures=fetch_failures,
         )
     return 0
+
+
+def _check_fetch_halt(
+    failures, *, discovered_count: int
+) -> str | None:
+    if discovered_count == 0:
+        return None
+    rate = len(failures) / discovered_count
+    if rate > FETCH_FAILURE_HALT_RATE:
+        return (
+            f"fetch_failure_rate={rate:.1%} exceeds "
+            f"{FETCH_FAILURE_HALT_RATE:.0%} — source access issue, "
+            f"manual investigation needed"
+        )
+    return None
 
 
 def _check_halt(diff, *, processed_count: int) -> str | None:
@@ -220,7 +266,9 @@ def _write_summary(
     records,
     prior_colors_by_id: dict,
     halt_reason: str | None,
+    fetch_failures=None,
 ) -> None:
+    fetch_failures = fetch_failures or []
     records_by_id = {r.id: r for r in records}
 
     added_details = []
@@ -275,6 +323,11 @@ def _write_summary(
                 }
             )
 
+    fetch_failure_details = [
+        {"sku": f.sku, "url": f.url, "kind": f.kind, "error": f.error}
+        for f in fetch_failures
+    ]
+
     payload = {
         "line": line_path,
         "prior_data_version": prior_version,
@@ -288,12 +341,14 @@ def _write_summary(
             "discontinued": len(diff.discontinued),
             "hex_changed": len(diff.hex_changed),
             "low_confidence": len(diff.low_confidence),
+            "fetch_failures": len(fetch_failures),
             "records": len(records),
         },
         "added": added_details,
         "discontinued": discontinued_details,
         "hex_changed": hex_change_details,
         "low_confidence": low_confidence_details,
+        "fetch_failures": fetch_failure_details,
     }
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(payload, indent=2) + "\n")

@@ -161,7 +161,7 @@ fabric-color-dataset/
 │
 └── .github/
     └── workflows/
-        ├── weekly-update.yml
+        ├── monthly-update.yml
         ├── validate-pr.yml
         └── release.yml
 ```
@@ -333,14 +333,14 @@ elif ΔE >= 7:
 
 ### Human review loop
 
-`confidence: "low"` entries appear in the weekly PR description. You eyeball the swatch, pick the right value (or override manually). Manual overrides are recorded as `hex_method: "manual_override"` and persist — they don't get overwritten on subsequent runs unless the source image hash changes.
+`confidence: "low"` entries appear in the monthly PR description. You eyeball the swatch, pick the right value (or override manually). Manual overrides are recorded as `hex_method: "manual_override"` and persist — they don't get overwritten on subsequent runs unless the source image hash changes.
 
 ### Cost
 
 Rough estimate at Kona Cotton scale (370 colors):
 
 - Initial extraction: ~370 vision calls. Well under $10 at current Claude pricing.
-- Weekly runs: near-zero (cache hits everywhere).
+- Monthly runs: near-zero (cache hits everywhere).
 - Prompt version bumps: full re-extraction, same as initial.
 
 Cost is a non-issue. The constraint is quality.
@@ -353,13 +353,13 @@ Before running on all 370, run a calibration pass on 10–15 colors with known-t
 
 ## Update cadence
 
-**Weekly run only.** No daily liveness check for v0.1 — the week of latency on catching URL rot is genuinely fine at current scale, and the complexity cost of a second scheduled job outweighs the benefit.
+**Monthly run only.** No daily liveness check for v0.1 — the month of latency on catching URL rot is genuinely fine at current scale (fabric manufacturers publish new lines seasonally, not weekly), and the complexity cost of a second scheduled job outweighs the benefit.
 
-**Schedule:** Monday ~4am UTC. Full pipeline. If data changed, open a PR with a diff summary and low-confidence flags.
+**Schedule:** 1st of each month ~4am UTC. Full pipeline. If data changed, open a PR with a diff summary and low-confidence flags.
 
 ### Auto-merge policy
 
-**Nothing in `/data` auto-merges.** Every data change gets human review. 30 seconds of time per week to skim and click merge; the payoff is that every commit to main has had eyes on it, and consumers can trust it.
+**Nothing in `/data` auto-merges.** Every data change gets human review. 30 seconds of time per month to skim and click merge; the payoff is that every commit to main has had eyes on it, and consumers can trust it.
 
 ### Halt thresholds
 
@@ -370,7 +370,11 @@ if hex_change_rate > 20%:
     halt("suspicious hex change rate — manual investigation needed")
 if low_confidence_rate > 10%:
     halt("suspicious confidence drop — manual investigation needed")
+if fetch_failure_rate > 25%:
+    halt("source access issue — manual investigation needed")
 ```
+
+The fetch-failure halt matters because merge carries prior records forward for missing SKUs — without it, a systematic block on the manufacturer site would surface as "0 material changes, skipping PR" and hide the problem.
 
 Better to halt unnecessarily and investigate than to auto-open a PR that corrupts the dataset if skim-merged.
 
@@ -379,7 +383,7 @@ Better to halt unnecessarily and investigate than to auto-open a PR that corrupt
 Skimmable in under a minute:
 
 ```
-## Weekly update — 2026-04-17
+## Monthly update — 2026-04-17
 
 ### Summary
 - Added 2 new colors (Kona Cotton 2026 release)
@@ -413,7 +417,7 @@ Pipeline auto-appends to per-file `.changelog.md` on each merged update. `data_v
 
 ### Release process
 
-Decoupled from weekly updates. Manual tag push when stable; `release.yml` workflow handles publishing. Might merge three weekly PRs and cut one release.
+Decoupled from monthly updates. Manual tag push when stable; `release.yml` workflow handles publishing. Might merge three monthly PRs and cut one release.
 
 ---
 
@@ -483,7 +487,7 @@ Things we discussed and deliberately left out, so "why isn't this here?" has a c
 - **Retailer URLs.** Not scraped major retailers (Fat Quarter Shop etc.); not community-contributed local shops. Maybe community-sourced local shops in a future version if demand emerges, but no placeholder field in the schema — adding cleanly later is better than reserving a shape we haven't thought through.
 - **Color family / tags.** Deferred until there's a sustainable QA process. Unverifiable data is worse than no data.
 - **`last_verified` / `manufacturer_product_url_last_verified` fields.** Dropped after realizing the daily liveness check wasn't happening in v0.1; `source_collected_on` covers the data-freshness question sufficiently.
-- **Daily liveness check.** Weekly latency on URL-rot detection is fine at current scale.
+- **Daily liveness check.** Monthly latency on URL-rot detection is fine at current scale.
 - **npm and PyPI packages.** jsDelivr only until a real consumer asks.
 - **REST API, docs website, color browser UI.** Each is a project unto itself.
 - **Auto-merging of data changes.** Every data PR gets human review.

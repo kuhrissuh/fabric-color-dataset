@@ -4,7 +4,7 @@ import json
 from datetime import date
 
 import cli
-from models import ColorRecord, LineDiff
+from models import ColorRecord, FetchFailure, LineDiff
 
 
 def _record(cid: str, name: str, sku: str, hex_: str) -> ColorRecord:
@@ -51,6 +51,29 @@ def test_halt_silent_when_both_rates_within_bounds():
 
 def test_halt_handles_empty_run():
     assert cli._check_halt(LineDiff(), processed_count=0) is None
+
+
+def test_fetch_halt_fires_above_threshold():
+    failures = [
+        FetchFailure(sku=f"K-{i}", url="u", kind="html", error="e")
+        for i in range(30)
+    ]
+    reason = cli._check_fetch_halt(failures, discovered_count=100)
+    assert reason is not None
+    assert "fetch_failure_rate" in reason
+
+
+def test_fetch_halt_silent_below_threshold():
+    failures = [
+        FetchFailure(sku=f"K-{i}", url="u", kind="html", error="e")
+        for i in range(25)
+    ]
+    # 25% exactly; strict greater-than threshold means no halt.
+    assert cli._check_fetch_halt(failures, discovered_count=100) is None
+
+
+def test_fetch_halt_handles_zero_discovered():
+    assert cli._check_fetch_halt([], discovered_count=0) is None
 
 
 def test_summary_json_captures_before_after_hex(tmp_path):
@@ -111,3 +134,55 @@ def test_summary_json_records_halt(tmp_path):
     payload = json.loads(out.read_text())
     assert payload["halt"].startswith("hex_change_rate")
     assert payload["new_data_version"] is None
+
+
+def test_summary_json_includes_fetch_failures(tmp_path):
+    out = tmp_path / "summary.json"
+    failures = [
+        FetchFailure(
+            sku="K001-497",
+            url="https://example.com/K001-497.jpg",
+            kind="image",
+            error="failed to fetch ...: 403",
+        ),
+    ]
+    cli._write_summary(
+        out,
+        line_path="m/l",
+        prior_version="0.1.0",
+        new_version=None,
+        diff=LineDiff(),
+        records=[],
+        prior_colors_by_id={},
+        halt_reason="fetch_failure_rate=30% exceeds 25%",
+        fetch_failures=failures,
+    )
+
+    payload = json.loads(out.read_text())
+    assert payload["counts"]["fetch_failures"] == 1
+    assert payload["fetch_failures"] == [
+        {
+            "sku": "K001-497",
+            "url": "https://example.com/K001-497.jpg",
+            "kind": "image",
+            "error": "failed to fetch ...: 403",
+        }
+    ]
+
+
+def test_summary_json_fetch_failures_default_empty(tmp_path):
+    out = tmp_path / "summary.json"
+    cli._write_summary(
+        out,
+        line_path="m/l",
+        prior_version="0.1.0",
+        new_version="0.1.0",
+        diff=LineDiff(),
+        records=[],
+        prior_colors_by_id={},
+        halt_reason=None,
+    )
+
+    payload = json.loads(out.read_text())
+    assert payload["counts"]["fetch_failures"] == 0
+    assert payload["fetch_failures"] == []
