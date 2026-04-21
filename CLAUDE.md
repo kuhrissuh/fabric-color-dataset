@@ -74,3 +74,4 @@ Git tags are immutable. Tag releases manually; don't tag on every weekly merge.
 - Review diffs carefully before committing.
 - Push back on deviations from the plan. If something feels off against `docs/project-plan.md`, say so before implementing.
 - Update this file when a constraint needs reinforcing across sessions.
+- Log significant decisions in `docs/decisions.md` — date, what was decided, why, alternatives rejected.

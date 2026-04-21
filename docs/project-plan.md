@@ -8,6 +8,8 @@ Art Gallery Fabrics Pure Solids was the initial candidate but was deferred. AGF 
 
 The core principle running through every decision below: **build the smallest version that does the thing, defer everything speculative, optimize for the case where you're the only user for a while.** The schema and the stability contract are load-bearing; most other infrastructure is not.
 
+A chronological index of key decisions (what was chosen, why, alternatives rejected) lives in [`docs/decisions.md`](decisions.md). When making tradeoff calls, check there first — many questions have already been settled.
+
 ---
 
 ## Schema
