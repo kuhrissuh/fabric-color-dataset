@@ -1,6 +1,6 @@
 {
-  "schema_version": "1.0.0",
-  "data_version": "0.1.0",
+  "schema_version": "1.1.0",
+  "data_version": "0.1.1",
   "manufacturer": {
     "name": "Riley Blake Designs",
     "slug": "riley-blake-designs",
@@ -10,10 +10,10 @@
     "name": "Confetti Cottons",
     "slug": "confetti-cottons",
     "substrate": "cotton",
-    "weight_oz_per_sq_yd": 4.1,
+    "weight_oz_per_sq_yd": null,
     "width_inches": 44.0
   },
-  "notes": "Riley Blake Designs' solid cotton line, sold as Confetti Cotton\u2122 Solids. The manufacturer website is backed by a NetSuite SCA JSON catalog; the scraper paginates that API rather than scraping HTML and filters the 410 category items down to the 300 base colors (SKUs matching `^C120-[A-Z0-9]+$`, excluding precuts, 20-yard bolts, and swatch cards). Like Art Gallery Fabrics Pure Solids, images are flat rendered swatches rather than fabric photographs, so the classifier routes them to the algorithmic-only branch.",
+  "notes": "Riley Blake Designs' solid cotton line, sold as Confetti Cotton\u2122 Solids. The manufacturer website is backed by a NetSuite SCA JSON catalog; the scraper paginates that API rather than scraping HTML and filters the 410 category items down to the 300 base colors (SKUs matching `^C120-[A-Z0-9]+$`, excluding precuts, 20-yard bolts, and swatch cards). Like Art Gallery Fabrics Pure Solids, images are flat rendered swatches rather than fabric photographs, so the classifier routes them to the algorithmic-only branch. Riley Blake does not publish a per-line fabric weight on product pages, the About Our Fabric page, or in the catalog JSON, so weight_oz_per_sq_yd is null rather than a guessed value.",
   "id_scheme": "manufacturer_sku",
   "generated_on": "2026-04-19",
   "generator_version": "0.1.0",

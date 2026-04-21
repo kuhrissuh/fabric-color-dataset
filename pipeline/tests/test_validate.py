@@ -59,6 +59,12 @@ def test_valid_passes():
     validate.validate(fresh())
 
 
+def test_null_line_weight_passes():
+    data = fresh()
+    data["line"]["weight_oz_per_sq_yd"] = None
+    validate.validate(data)
+
+
 def test_slugify_handles_spaces_and_punctuation():
     assert validate.slugify("K001-197") == "k001-197"
     assert validate.slugify("K001 197") == "k001-197"
