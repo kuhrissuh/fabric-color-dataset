@@ -5,13 +5,14 @@ from __future__ import annotations
 from typing import Callable, Dict, List
 
 from models import FetchedColor, LineConfig, ParsedColor
-from scrapers import art_gallery_fabrics, robert_kaufman
+from scrapers import art_gallery_fabrics, riley_blake_designs, robert_kaufman
 
 Scraper = Callable[[bytes, FetchedColor, LineConfig], ParsedColor]
 
 _SCRAPERS: Dict[str, Scraper] = {
     "robert_kaufman": robert_kaufman.parse,
     "art_gallery_fabrics": art_gallery_fabrics.parse,
+    "riley_blake_designs": riley_blake_designs.parse,
 }
 
 

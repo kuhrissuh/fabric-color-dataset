@@ -17,12 +17,13 @@ from __future__ import annotations
 from typing import Callable, Dict, List
 
 from models import DiscoveredColor, LineConfig
-from scrapers import art_gallery_fabrics
+from scrapers import art_gallery_fabrics, riley_blake_designs
 
 Discoverer = Callable[[LineConfig], List[DiscoveredColor]]
 
 _CUSTOM_DISCOVERERS: Dict[str, Discoverer] = {
     "art_gallery_fabrics": art_gallery_fabrics.discover,
+    "riley_blake_designs": riley_blake_designs.discover,
 }
 
 

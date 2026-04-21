@@ -6,6 +6,15 @@ Format follows [Keep a Changelog](https://keepachangelog.com/) loosely. Versions
 
 ## Unreleased
 
+Adds Riley Blake Designs Confetti Cottons as the third line in the dataset.
+
+### New fabric lines
+- **Riley Blake Designs — Confetti Cottons** (300 colors) — cotton, 4.1 oz/sq yd, 44" wide. Hex extraction is primarily algorithmic (294 colors via LAB-median sampling); 6 colors routed through vision-consensus where the swatch classifier flagged the image as photograph-like.
+
+### Data quality
+- Confetti Cottons: all 300 colors flagged high confidence.
+- Kona Cotton and Pure Solids: unchanged from v0.2.0.
+
 ## 0.2.0 — 2026-04-19
 
 Adds Art Gallery Fabrics Pure Solids as the second line in the dataset.
