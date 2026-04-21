@@ -17,7 +17,13 @@ from urllib.parse import urlparse
 
 import requests
 
-from models import DiscoveredColor, FetchedColor, LineConfig
+from models import (
+    DiscoveredColor,
+    FetchedColor,
+    FetchFailure,
+    FetchResult,
+    LineConfig,
+)
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 RAW_DIR = REPO_ROOT / "raw"
@@ -31,9 +37,13 @@ RETRIES = 2
 RETRY_BACKOFF_SECONDS = 2
 
 
+class FetchError(RuntimeError):
+    """Raised when a URL fetch fails after exhausting retries."""
+
+
 def fetch(
     config: LineConfig, discovered: List[DiscoveredColor]
-) -> List[FetchedColor]:
+) -> FetchResult:
     line_raw = RAW_DIR / config.manufacturer.slug / config.line.slug
     html_dir = line_raw / "html"
     image_dir = line_raw / "images"
@@ -45,6 +55,7 @@ def fetch(
 
     today = date.today()
     out: List[FetchedColor] = []
+    failures: List[FetchFailure] = []
     # Dedupe identical URLs within one run (e.g. manufacturers that expose
     # every color on a single catalog page — same HTML shared by every SKU).
     url_cache: dict[str, bytes] = {}
@@ -58,10 +69,28 @@ def fetch(
         html_path = html_dir / f"{_url_slug(item.product_url)}.html"
         image_path = image_dir / f"{item.sku}.jpg"
 
-        html_bytes = _cached_get(item.product_url)
+        try:
+            html_bytes = _cached_get(item.product_url)
+        except FetchError as exc:
+            failures.append(FetchFailure(
+                sku=item.sku,
+                url=item.product_url,
+                kind="html",
+                error=str(exc),
+            ))
+            continue
         html_path.write_bytes(html_bytes)
 
-        image_bytes = _cached_get(item.image_url)
+        try:
+            image_bytes = _cached_get(item.image_url)
+        except FetchError as exc:
+            failures.append(FetchFailure(
+                sku=item.sku,
+                url=item.image_url,
+                kind="image",
+                error=str(exc),
+            ))
+            continue
         image_path.write_bytes(image_bytes)
         image_sha = hashlib.sha256(image_bytes).hexdigest()
 
@@ -76,7 +105,7 @@ def fetch(
                 fetched_on=today,
             )
         )
-    return out
+    return FetchResult(fetched=out, failures=failures)
 
 
 def _url_slug(url: str) -> str:
@@ -112,4 +141,4 @@ def _get(session: requests.Session, url: str) -> bytes:
             last = exc
             if attempt < RETRIES:
                 time.sleep(RETRY_BACKOFF_SECONDS * (attempt + 1))
-    raise RuntimeError(f"failed to fetch {url}: {last}")
+    raise FetchError(f"failed to fetch {url}: {last}")

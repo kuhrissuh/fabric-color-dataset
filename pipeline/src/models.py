@@ -60,6 +60,20 @@ class FetchedColor:
 
 
 @dataclass(frozen=True)
+class FetchFailure:
+    sku: str
+    url: str
+    kind: str  # "html" | "image"
+    error: str
+
+
+@dataclass(frozen=True)
+class FetchResult:
+    fetched: List[FetchedColor]
+    failures: List[FetchFailure]
+
+
+@dataclass(frozen=True)
 class ParsedColor:
     sku: str
     name: str

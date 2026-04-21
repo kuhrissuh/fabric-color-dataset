@@ -4,6 +4,34 @@ Chronological record of design and architecture decisions for the fabric-color-d
 
 ---
 
+## 2026-04-20 — Per-item fetch resilience + 25% fetch-failure halt threshold
+
+**Status:** accepted
+
+`pipeline/src/fetch.py` now catches `FetchError` per SKU instead of raising on the first failure. Failed SKUs are collected into a `FetchFailure` list on the new `FetchResult` stage-boundary dataclass and surfaced in the run summary / PR body. Merge already carries prior records forward for SKUs missing from the fresh run, so partial runs produce a safe diff.
+
+A third halt threshold was added alongside the existing hex-change (>20%) and low-confidence (>10%) halts: `fetch_failure_rate > 25%`. Without it, a systematic block on manufacturer IPs (hypothesis 2 in [issue #9](https://github.com/kuhrissuh/fabric-color-dataset/issues/9)) would surface as "0 material changes, skipping PR" — silently succeeding with an empty run. The threshold is deliberately loose (25%) because per-run sporadic 403s on a 370-SKU catalog should not halt the pipeline; only a systemic failure should.
+
+Alternatives considered: (a) halt immediately after fetch instead of threading failures through to the summary. Rejected — surfacing failures in the PR body is useful even when below threshold, both for visibility and for telling the two issue-#9 hypotheses apart over a run or two. (b) catch broader exceptions than `FetchError`. Rejected — catching `RuntimeError` or bare `Exception` would mask programming errors inside the loop; a dedicated exception class keeps the resilience scope tight.
+
+Consequence: the monthly run can now complete partial successes and produce a reviewable PR. Issue #9's recommended path (observe a run or two, distinguish sporadic vs. systematic filtering) is unblocked.
+
+---
+
+## 2026-04-20 — Pipeline cadence changed from weekly to monthly
+
+**Status:** accepted
+
+The scheduled pipeline run (formerly `weekly-update.yml`, now `monthly-update.yml`) runs on the 1st of each month at ~4am UTC instead of every Monday. Branch names, PR titles, and the concurrency group all use the `monthly-update` prefix.
+
+Fabric manufacturers publish new lines seasonally, not weekly. A weekly cadence was always going to produce an empty PR most weeks, and the act of running the pipeline against upstream pages adds load on manufacturer sites (and on the Anthropic API for first-run-per-prompt-version cases) with no corresponding signal. Monthly is the first cadence where the probability of a material change per run is meaningfully above zero.
+
+Daily and weekly alternatives were rejected. Daily would compound the load problem and require a liveness-check split that was already deferred (see `docs/project-plan.md` "Deliberately not included"). Weekly was the initial choice but the shipping reality of fabric catalogs doesn't warrant it — URL-rot latency at a month is still fine at current scale.
+
+Consequence: the `0 4 * * 1` cron becomes `0 4 1 * *`. The cron remains commented out pending resolution of issue #9 (runner-model decision) — this change is a rename/reframe, not a re-enable. Historical references in this decision log to "weekly" cadence are left in place; the reasoning each entry captures still applies.
+
+---
+
 ## 2026-04-20 — Low-confidence colors are spot-checked but never overridden
 
 **Status:** accepted

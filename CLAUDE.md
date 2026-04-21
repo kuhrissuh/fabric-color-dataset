@@ -28,7 +28,7 @@ Full project rationale lives in `docs/project-plan.md`. This file is operational
 
 **Image hash is the cache key for extraction.** Re-extraction happens only when `image_sha256` changes or when the prompt version bumps. This is what makes prompt iteration cheap.
 
-**Halt on anomaly, don't auto-PR.** If the pipeline detects >20% hex changes or >10% low-confidence rate across a run, halt with an error. Better to investigate manually than to corrupt the dataset.
+**Halt on anomaly, don't auto-PR.** If the pipeline detects >20% hex changes, >10% low-confidence rate, or >25% fetch failures across a run, halt with an error. Better to investigate manually than to corrupt the dataset.
 
 **Vision prompt is versioned as a file.** `pipeline/prompts/hex_extraction_v1.md`. Editing means creating `v2` alongside, not modifying `v1`. The file hash is part of the extraction cache key.
 
@@ -41,7 +41,7 @@ Full project rationale lives in `docs/project-plan.md`. This file is operational
 Three buckets, determined by ΔE distance in LAB space between vision and algorithmic extractions:
 - `high`: ΔE < 3, no warnings from vision
 - `medium`: ΔE < 3 with warnings, OR 3 ≤ ΔE < 7
-- `low`: ΔE ≥ 7 — flagged for human review in the weekly PR
+- `low`: ΔE ≥ 7 — flagged for human review in the monthly PR
 
 Manual overrides use `hex_method: "manual_override"` and persist across runs unless the source image hash changes.
 
@@ -66,7 +66,7 @@ v0.1 uses jsDelivr CDN only:
 ```
 https://cdn.jsdelivr.net/gh/USER/fabric-color-dataset@v0.1.0/data/...
 ```
-Git tags are immutable. Tag releases manually; don't tag on every weekly merge.
+Git tags are immutable. Tag releases manually; don't tag on every monthly merge.
 
 ## Discipline when working on this codebase
 
