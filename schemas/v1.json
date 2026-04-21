@@ -43,7 +43,7 @@
         "name": { "type": "string", "minLength": 1 },
         "slug": { "$ref": "#/$defs/slug" },
         "substrate": { "type": "string", "minLength": 1 },
-        "weight_oz_per_sq_yd": { "type": "number", "exclusiveMinimum": 0 },
+        "weight_oz_per_sq_yd": { "type": ["number", "null"], "exclusiveMinimum": 0 },
         "width_inches": { "type": "number", "exclusiveMinimum": 0 }
       }
     },

@@ -25,7 +25,7 @@ class Line:
     name: str
     slug: str
     substrate: str
-    weight_oz_per_sq_yd: float
+    weight_oz_per_sq_yd: Optional[float]
     width_inches: float
 
 

@@ -7,7 +7,7 @@ line:
   name: Confetti Cottons
   slug: confetti-cottons
   substrate: cotton
-  weight_oz_per_sq_yd: 4.1
+  weight_oz_per_sq_yd: null
   width_inches: 44
 
 notes: >-
@@ -18,6 +18,9 @@ notes: >-
   excluding precuts, 20-yard bolts, and swatch cards). Like Art Gallery
   Fabrics Pure Solids, images are flat rendered swatches rather than fabric
   photographs, so the classifier routes them to the algorithmic-only branch.
+  Riley Blake does not publish a per-line fabric weight on product pages,
+  the About Our Fabric page, or in the catalog JSON, so weight_oz_per_sq_yd
+  is null rather than a guessed value.
 
 id_scheme: manufacturer_sku
 

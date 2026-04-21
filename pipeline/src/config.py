@@ -21,6 +21,7 @@ def load(line_path: str) -> LineConfig:
     mfr = raw["manufacturer"]
     line = raw["line"]
     templates = raw["url_templates"]
+    weight = line["weight_oz_per_sq_yd"]
     return LineConfig(
         manufacturer=Manufacturer(
             name=mfr["name"], slug=mfr["slug"], website=mfr["website"]
@@ -29,7 +30,7 @@ def load(line_path: str) -> LineConfig:
             name=line["name"],
             slug=line["slug"],
             substrate=line["substrate"],
-            weight_oz_per_sq_yd=float(line["weight_oz_per_sq_yd"]),
+            weight_oz_per_sq_yd=float(weight) if weight is not None else None,
             width_inches=float(line["width_inches"]),
         ),
         notes=raw["notes"].strip(),
