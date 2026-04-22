@@ -4,6 +4,16 @@ Chronological record of design and architecture decisions for the fabric-color-d
 
 ---
 
+## 2026-04-22 — Human spot-check of all 96 low-confidence Kona Cotton colors completed
+
+**Status:** accepted
+
+All 96 `low`-confidence Kona Cotton colors (ΔE ≥ 7 between vision and algorithmic extractions) were reviewed by a human before v1.0.0. No gross extraction failures were found — no cases where the pipeline value was categorically the wrong hue. Values were left in place per the 2026-04-20 decision (low-confidence colors are spot-checked but never overridden unless categorically wrong).
+
+The `low` confidence flag remains the signal to consumers that these values carry a larger approximation error. The spot-check constitutes the human review step required before the v1.0.0 tag.
+
+---
+
 ## 2026-04-20 — Per-item fetch resilience + 25% fetch-failure halt threshold
 
 **Status:** accepted
