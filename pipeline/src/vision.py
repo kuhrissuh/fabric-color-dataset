@@ -50,31 +50,49 @@ def extract(image_jpeg: bytes) -> VisionResult:
     prompt = _load_prompt()
     encoded = base64.standard_b64encode(image_jpeg).decode("ascii")
 
-    response = client.messages.create(
-        model=MODEL,
-        max_tokens=512,
-        messages=[
-            {
-                "role": "user",
-                "content": [
-                    {
-                        "type": "image",
-                        "source": {
-                            "type": "base64",
-                            "media_type": "image/jpeg",
-                            "data": encoded,
+    try:
+        response = client.messages.create(
+            model=MODEL,
+            max_tokens=512,
+            messages=[
+                {
+                    "role": "user",
+                    "content": [
+                        {
+                            "type": "image",
+                            "source": {
+                                "type": "base64",
+                                "media_type": "image/jpeg",
+                                "data": encoded,
+                            },
                         },
-                    },
-                    {"type": "text", "text": prompt},
-                ],
-            }
-        ],
-    )
+                        {"type": "text", "text": prompt},
+                    ],
+                }
+            ],
+        )
+    except (anthropic.NotFoundError, anthropic.BadRequestError) as exc:
+        if _is_model_error(exc):
+            raise VisionError(
+                f"Claude API rejected model {MODEL!r} "
+                f"({type(exc).__name__}: {exc}). The model may have been "
+                f"deprecated or retired. Update MODEL in "
+                f"pipeline/src/vision.py to a current Claude vision model "
+                f"and re-run."
+            ) from exc
+        raise
 
     text = _text_from_response(response)
     parsed = _parse_model_output(text)
     _cache_store(key, parsed)
     return _from_json(parsed)
+
+
+def _is_model_error(exc: Exception) -> bool:
+    # Anthropic returns 400 for a retired/unknown model and 404 for some
+    # variants; both surface the word "model" in the message. Keep the
+    # translation narrow so unrelated 400s (e.g. malformed image) bubble up.
+    return "model" in str(exc).lower()
 
 
 def _client() -> anthropic.Anthropic:
