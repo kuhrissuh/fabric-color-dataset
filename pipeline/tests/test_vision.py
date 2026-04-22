@@ -1,7 +1,10 @@
 from __future__ import annotations
 
 import json
+from unittest.mock import MagicMock
 
+import anthropic
+import httpx
 import pytest
 
 import vision
@@ -82,3 +85,51 @@ def test_invalid_confidence_bucket_raises():
     payload = {**VALID, "confidence": "very-high"}
     with pytest.raises(vision.VisionError, match="confidence"):
         vision._parse_model_output(json.dumps(payload))
+
+
+def _anthropic_error(cls, message: str, status: int):
+    request = httpx.Request("POST", "https://api.anthropic.com/v1/messages")
+    response = httpx.Response(status, request=request)
+    return cls(message=message, response=response, body=None)
+
+
+def test_retired_model_not_found_translates(monkeypatch):
+    err = _anthropic_error(
+        anthropic.NotFoundError,
+        f"model: {vision.MODEL}",
+        404,
+    )
+    client = MagicMock()
+    client.messages.create.side_effect = err
+    monkeypatch.setattr(vision, "_client", lambda: client)
+
+    with pytest.raises(vision.VisionError, match="deprecated or retired"):
+        vision.extract(b"not-really-a-jpeg")
+
+
+def test_retired_model_bad_request_translates(monkeypatch):
+    err = _anthropic_error(
+        anthropic.BadRequestError,
+        f"model: {vision.MODEL} has been deprecated",
+        400,
+    )
+    client = MagicMock()
+    client.messages.create.side_effect = err
+    monkeypatch.setattr(vision, "_client", lambda: client)
+
+    with pytest.raises(vision.VisionError, match="deprecated or retired"):
+        vision.extract(b"not-really-a-jpeg-2")
+
+
+def test_unrelated_bad_request_bubbles_up(monkeypatch):
+    err = _anthropic_error(
+        anthropic.BadRequestError,
+        "image exceeds size limit",
+        400,
+    )
+    client = MagicMock()
+    client.messages.create.side_effect = err
+    monkeypatch.setattr(vision, "_client", lambda: client)
+
+    with pytest.raises(anthropic.BadRequestError):
+        vision.extract(b"not-really-a-jpeg-3")
