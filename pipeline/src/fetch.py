@@ -30,7 +30,7 @@ RAW_DIR = REPO_ROOT / "raw"
 
 USER_AGENT = (
     "fabric-color-dataset/0.1 "
-    "(+https://github.com/karissawhobson/fabric-color-dataset)"
+    "(+https://github.com/kuhrissuh/fabric-color-dataset)"
 )
 REQUEST_TIMEOUT = 30
 RETRIES = 2
